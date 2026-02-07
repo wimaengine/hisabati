@@ -5,3 +5,9 @@ export function clamp(value: number, min: number, max: number): number {
   return value
 }
 
+
+
+export function snap(value: number, step: number): number {
+  return Math.round(value / step) * step
+}
+
