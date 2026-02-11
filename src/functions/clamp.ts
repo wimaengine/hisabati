@@ -11,3 +11,9 @@ export function snap(value: number, step: number): number {
   return Math.round(value / step) * step
 }
 
+
+
+export function snapDown(value: number, step: number): number {
+  return Math.floor(value / step) * step
+}
+
