@@ -17,3 +17,8 @@ export function snapDown(value: number, step: number): number {
   return Math.floor(value / step) * step
 }
 
+
+
+export function snapUp(value: number, step: number): number {
+  return Math.ceil(value / step) * step
+}
