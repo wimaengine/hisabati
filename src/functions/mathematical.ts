@@ -4,3 +4,9 @@ export function sq(x: number): number {
   return x * x
 }
 
+
+
+export function exp(x: number, e: number = 2): number {
+  return x ** e
+}
+
