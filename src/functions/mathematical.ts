@@ -44,3 +44,9 @@ export function degToRad(deg: number): number {
   return deg * DEG2RAD
 }
 
+
+
+export function radToDeg(rad: number): number {
+  return rad * RAD2DEG
+}
+
