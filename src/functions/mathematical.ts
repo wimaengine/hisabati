@@ -30,3 +30,11 @@ export function round(number: number, precision: number = 4): number {
   return Math.round(number * x) / x
 }
 
+
+
+export function naturalizePair(a: number, b: number): number {
+  if (a > b) return (a + b) * (a + b + 1) / 2 + a
+
+  return (a + b) * (a + b + 1) / 2 + b
+}
+
