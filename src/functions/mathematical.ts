@@ -22,3 +22,11 @@ export function invert(value: number): number {
   return 1 / value
 }
 
+
+
+export function round(number: number, precision: number = 4): number {
+  const x = 10 ** precision
+
+  return Math.round(number * x) / x
+}
+
