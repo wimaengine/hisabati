@@ -38,3 +38,9 @@ export function naturalizePair(a: number, b: number): number {
   return (a + b) * (a + b + 1) / 2 + b
 }
 
+
+
+export function degToRad(deg: number): number {
+  return deg * DEG2RAD
+}
+
