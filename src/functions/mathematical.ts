@@ -10,3 +10,9 @@ export function exp(x: number, e: number = 2): number {
   return x ** e
 }
 
+
+
+export function sqrt(x: number): number {
+  return Math.sqrt(x)
+}
+
