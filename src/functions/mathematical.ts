@@ -65,3 +65,12 @@ export function cantorPair(a: number, b: number): number {
 
 }
 
+
+
+export function cantorPairSigned(a: number, b: number): number {
+  const x = (a >= 0.0 ? 2.0 * a : (-2.0 * a) - 1.0)
+  const y = (b >= 0.0 ? 2.0 * b : (-2.0 * b) - 1.0)
+
+  return cantorPair(x, y)
+}
+
