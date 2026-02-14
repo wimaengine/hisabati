@@ -74,3 +74,8 @@ export function cantorPairSigned(a: number, b: number): number {
   return cantorPair(x, y)
 }
 
+
+
+export function fuzzyEqual(a: number, b: number, tolerance: number = Number.EPSILON): boolean {
+  return Math.abs(a - b) <= tolerance
+}
