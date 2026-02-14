@@ -50,3 +50,11 @@ export function radToDeg(rad: number): number {
   return rad * RAD2DEG
 }
 
+
+
+export function wrap(value: number, min: number, max: number): number {
+  const range = max - min
+
+  return (min + ((((value - min) % range) + range) % range))
+}
+
