@@ -58,3 +58,10 @@ export function wrap(value: number, min: number, max: number): number {
   return (min + ((((value - min) % range) + range) % range))
 }
 
+
+
+export function cantorPair(a: number, b: number): number {
+  return 0.5 * (a + b) * (a + b + 1) + b
+
+}
+
