@@ -351,7 +351,7 @@ export class Vector2 {
    *
    * /
    */
-  static Zero = new Vector2()
+  static readonly Zero = new Vector2()
 
   /**
    * A unit vector pointing in the x-axis.

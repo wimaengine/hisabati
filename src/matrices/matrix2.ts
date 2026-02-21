@@ -3,10 +3,9 @@ import { invert } from '../functions'
 /**
  * Represents a 2x2 matrix.
  *
- *  | a | c |
- *  |---|---|
- *  | b | d |
- * /
+ * Matrix layout:
+ * | a | c |
+ * | b | d |
  */
 export class Matrix2 {
 
@@ -18,6 +17,9 @@ export class Matrix2 {
 
   d!: number
 
+  /**
+   * Creates a matrix from raw components.
+   */
   constructor(e11: number = 1, e12: number = 0, e21: number = 0, e22: number = 1) {
     this.a = e11
     this.b = e21
@@ -25,94 +27,145 @@ export class Matrix2 {
     this.d = e22
   }
 
+  /**
+   * Sets this matrix from raw components.
+   */
   set(e11: number, e12: number, e21: number, e22: number): this {
     Matrix2.set(e11, e12, e21, e22, this)
 
     return this
   }
 
+  /**
+   * Copies another matrix into this one.
+   */
   copy(other: Matrix2): this {
     Matrix2.copy(other, this)
 
     return this
   }
 
+  /**
+   * Creates a new matrix with the same components.
+   */
   clone(): Matrix2 {
     return Matrix2.copy(this)
   }
 
+  /**
+   * Transposes this matrix in place.
+   */
   transpose(): this {
     Matrix2.transpose(this, this)
 
     return this
   }
 
+  /**
+   * Returns the determinant of this matrix.
+   */
   determinant(): number {
     return Matrix2.determinant(this)
   }
 
+  /**
+   * Returns the trace of this matrix.
+   */
   trace(): number {
     return Matrix2.trace(this)
   }
 
+  /**
+   * Adds another matrix to this one.
+   */
   add(matrix: Matrix2): this {
     Matrix2.add(this, matrix, this)
 
     return this
   }
 
+  /**
+   * Adds a scalar to each element.
+   */
   addScalar(scalar: number): this {
     Matrix2.addScalar(this, scalar, this)
 
     return this
   }
 
+  /**
+   * Subtracts another matrix from this one.
+   */
   subtract(matrix: Matrix2): this {
     Matrix2.subtract(this, matrix, this)
 
     return this
   }
 
+  /**
+   * Subtracts a scalar from each element.
+   */
   subtractScalar(scalar: number): this {
     Matrix2.subtractScalar(this, scalar, this)
 
     return this
   }
 
+  /**
+   * Multiplies this matrix by another.
+   */
   multiply(matrix: Matrix2): this {
     Matrix2.multiply(this, matrix, this)
 
     return this
   }
 
+  /**
+   * Multiplies each element by a scalar.
+   */
   multiplyScalar(scalar: number): this {
     Matrix2.multiplyScalar(this, scalar, this)
 
     return this
   }
 
+  /**
+   * Divides this matrix by another (this = this * inverse(matrix)).
+   */
   divide(matrix: Matrix2): this {
     Matrix2.divide(this, matrix, this)
 
     return this
   }
 
+  /**
+   * Divides each element by a scalar.
+   */
   divideScalar(scalar: number): this {
     Matrix2.divideScalar(this, scalar, this)
 
     return this
   }
 
+  /**
+   * Inverts this matrix in place.
+   */
   invert(): this {
     Matrix2.invert(this, this)
 
     return this
   }
 
+  /**
+   * Checks component-wise equality.
+   */
   equals(matrix: Matrix2): boolean {
     return Matrix2.equal(this, matrix)
   }
 
+  /**
+   * Creates or overwrites a matrix from raw components.
+   */
   static set(e11: number, e12: number, e21: number, e22: number, out = new Matrix2()): Matrix2 {
     out.a = e11
     out.b = e21
@@ -122,6 +175,9 @@ export class Matrix2 {
     return out
   }
 
+  /**
+   * Copies a matrix into an output matrix.
+   */
   static copy(matrix: Matrix2, out = new Matrix2()): Matrix2 {
     out.a = matrix.a
     out.b = matrix.b
@@ -131,6 +187,9 @@ export class Matrix2 {
     return out
   }
 
+  /**
+   * Transposes a matrix.
+   */
   static transpose(matrix: Matrix2, out = new Matrix2()): Matrix2 {
     const { b } = matrix
 
@@ -142,26 +201,41 @@ export class Matrix2 {
     return out
   }
 
+  /**
+   * Writes the identity matrix.
+   */
   static identity(out = new Matrix2()): Matrix2 {
     this.set(1, 0, 0, 1, out)
 
     return out
   }
 
+  /**
+   * Writes the zero matrix.
+   */
   static zero(out = new Matrix2()): Matrix2 {
     this.set(0, 0, 0, 0, out)
 
     return out
   }
 
+  /**
+   * Computes the determinant of a matrix.
+   */
   static determinant(matrix: Matrix2): number {
     return matrix.a * matrix.d - matrix.c * matrix.b
   }
 
+  /**
+   * Computes the trace of a matrix.
+   */
   static trace(matrix: Matrix2): number {
     return matrix.a + matrix.d
   }
 
+  /**
+   * Adds two matrices.
+   */
   static add(matrix1: Matrix2, matrix2: Matrix2, out = new Matrix2()): Matrix2 {
     out.a = matrix1.a + matrix2.a
     out.b = matrix1.b + matrix2.b
@@ -171,6 +245,9 @@ export class Matrix2 {
     return out
   }
 
+  /**
+   * Adds a scalar to each element.
+   */
   static addScalar(matrix: Matrix2, scalar: number, out = new Matrix2()): Matrix2 {
     out.a = matrix.a + scalar
     out.b = matrix.b + scalar
@@ -180,6 +257,9 @@ export class Matrix2 {
     return out
   }
 
+  /**
+   * Subtracts two matrices.
+   */
   static subtract(matrix1: Matrix2, matrix2: Matrix2, out = new Matrix2()): Matrix2 {
     out.a = matrix1.a - matrix2.a
     out.b = matrix1.b - matrix2.b
@@ -189,6 +269,9 @@ export class Matrix2 {
     return out
   }
 
+  /**
+   * Subtracts a scalar from each element.
+   */
   static subtractScalar(matrix: Matrix2, scalar: number, out = new Matrix2()): Matrix2 {
     out.a = matrix.a - scalar
     out.b = matrix.b - scalar
@@ -198,6 +281,9 @@ export class Matrix2 {
     return out
   }
 
+  /**
+   * Multiplies two matrices.
+   */
   static multiply(matrix1: Matrix2, matrix2: Matrix2, out = new Matrix2()): Matrix2 {
     const { a: aa, b: ab, c: ac, d: ad } = matrix1
     const { a: ba, b: bb, c: bc, d: bd } = matrix2
@@ -210,6 +296,9 @@ export class Matrix2 {
     return out
   }
 
+  /**
+   * Multiplies a matrix by a scalar.
+   */
   static multiplyScalar(matrix: Matrix2, scalar: number, out = new Matrix2()): Matrix2 {
     out.a = matrix.a * scalar
     out.b = matrix.b * scalar
@@ -219,6 +308,9 @@ export class Matrix2 {
     return out
   }
 
+  /**
+   * Divides two matrices (out = matrix1 * inverse(matrix2)).
+   */
   static divide(matrix1: Matrix2, matrix2: Matrix2, out = new Matrix2()): Matrix2 {
     const multiplier = this.invert(matrix2)
 
@@ -227,12 +319,18 @@ export class Matrix2 {
     return out
   }
 
+  /**
+   * Divides a matrix by a scalar.
+   */
   static divideScalar(matrix: Matrix2, scalar: number, out = new Matrix2()): Matrix2 {
     this.multiplyScalar(matrix, invert(scalar), out)
 
     return out
   }
 
+  /**
+   * Inverts a matrix.
+   */
   static invert(matrix: Matrix2, out = new Matrix2()): Matrix2 {
     const { a, b, c, d } = matrix
     const det = this.determinant(matrix)
@@ -251,6 +349,9 @@ export class Matrix2 {
     return out
   }
 
+  /**
+   * Checks component-wise equality for two matrices.
+   */
   static equal(matrix1: Matrix2, matrix2: Matrix2): boolean {
     return (
       matrix1.a === matrix2.a ||
@@ -260,6 +361,9 @@ export class Matrix2 {
     )
   }
 
+  /**
+   * Iterates over the matrix components in column-major order.
+   */
   * [Symbol.iterator](): IterableIterator<number> {
     yield this.a
     yield this.b
@@ -268,12 +372,12 @@ export class Matrix2 {
   }
 
   /**
-   * /
+   * The identity matrix.
    */
-  static Identity = Matrix2.identity()
+  static readonly Identity = Matrix2.identity()
 
   /**
-   * /
+   * The zero matrix.
    */
-  static Zero = Matrix2.zero()
+  static readonly Zero = Matrix2.zero()
 }

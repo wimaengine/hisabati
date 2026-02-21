@@ -1,21 +1,33 @@
+/**
+ * Linearly interpolates between two values.
+ */
 export function lerp(from: number, to: number, t: number): number {
   return from + t * (to - from)
 }
 
 
 
+/**
+ * Returns the interpolation factor for a value between bounds.
+ */
 export function inverseLerp(from: number, to: number, value: number): number {
   return (value - from) / (to - from)
 }
 
 
 
+/**
+ * Remaps a value from one range to another.
+ */
 export function remap(v: number, x1: number, y1: number, x2: number, y2: number): number {
   return x2 + v * (y2 - x2) / (y1 - x1)
 }
 
 
 
+/**
+ * Collection of interpolation functions.
+ */
 export const Interpolation = {
 
   Linear(p0: number, p1: number, t: number): number {

@@ -5,14 +5,12 @@ import { invert } from '../functions'
 
 /**
  * Represents a 3x4 affine.
- * Can be used to represent 3 dimensional rotation, scale,skew and translation.
+ * Can be used to represent 3 dimensional rotation, scale, skew and translation.
  *
- *
- *  | a | d | g | j |
- *  |---|---|---|---|
- *  | b | e | h | k |
- *  | c | f | i | l |
- * /
+ * Matrix layout:
+ * | a | d | g | x |
+ * | b | e | h | y |
+ * | c | f | i | z |
  */
 export class Affine3 {
 
@@ -57,6 +55,9 @@ export class Affine3 {
     Affine3.set(e11, e12, e13, e14, e21, e22, e23, e24, e31, e32, e33, e34, this)
   }
 
+  /**
+   * Sets this affine from raw matrix components.
+   */
   set(
     e11: number,
     e12: number,
@@ -76,44 +77,68 @@ export class Affine3 {
     return this
   }
 
+  /**
+   * Copies another affine into this one.
+   */
   copy(affine: Affine3): this {
     Affine3.copy(affine, this)
 
     return this
   }
 
+  /**
+   * Creates a new affine with the same components.
+   */
   clone(): Affine3 {
     return new Affine3().copy(this)
   }
 
+  /**
+   * Composes this affine from translation, orientation and scale.
+   */
   compose(translation: Vector3, orientation: Quaternion, scale: Vector3): this {
     Affine3.compose(translation, orientation, scale, this)
 
     return this
   }
 
+  /**
+   * Decomposes this affine into translation, orientation and scale.
+   */
   decompose(): [Vector3, Quaternion, Vector3] {
     return Affine3.decompose(this)
   }
 
+  /**
+   * Applies a translation to this affine.
+   */
   translate(translation: Vector3): this {
     Affine3.translate(this, translation, this)
 
     return this
   }
 
+  /**
+   * Applies a rotation to this affine.
+   */
   rotate(angle: Quaternion): this {
     Affine3.rotate(this, angle, this)
 
     return this
   }
 
+  /**
+   * Applies a scale to this affine.
+   */
   scale(scale: Vector3): this {
     Affine3.scale(this, scale, this)
 
     return this
   }
 
+  /**
+   * Orients this affine to face a target position.
+   */
   lookAt(target: Vector3, up: Vector3): this {
     const eye = new Vector3(this.x, this.y, this.z)
 
@@ -122,32 +147,50 @@ export class Affine3 {
     return this
   }
 
+  /**
+   * Transforms a vector by this affine in place.
+   */
   transform(vector: Vector3): Vector3 {
     return Affine3.transform(this, vector, vector)
   }
 
+  /**
+   * Inverts this affine in place.
+   */
   invert(): this {
     Affine3.invert(this, this)
 
     return this
   }
 
+  /**
+   * Multiplies this affine by another (this = this * affine).
+   */
   multiply(affine: Affine3): this {
     Affine3.multiply(this, affine, this)
 
     return this
   }
 
+  /**
+   * Divides this affine by another (this = this * inverse(affine)).
+   */
   divide(affine: Affine3): this {
     Affine3.divide(this, affine, this)
 
     return this
   }
 
+  /**
+   * Checks component-wise equality.
+   */
   equals(affine: Affine3): boolean {
     return Affine3.equal(this, affine)
   }
 
+  /**
+   * Creates or overwrites an affine with raw matrix components.
+   */
   static set(
     e11: number,
     e12: number,
@@ -179,6 +222,9 @@ export class Affine3 {
     return out
   }
 
+  /**
+   * Copies an affine into an output affine.
+   */
   static copy(affine: Affine3, out = new Affine3()): Affine3 {
     out.a = affine.a
     out.b = affine.b
@@ -196,6 +242,9 @@ export class Affine3 {
     return out
   }
 
+  /**
+   * Writes the identity transform.
+   */
   static identity(out = new Affine3()): Affine3 {
     out.a = 1
     out.b = 0
@@ -213,6 +262,9 @@ export class Affine3 {
     return out
   }
 
+  /**
+   * Writes the zero transform.
+   */
   static zero(out = new Affine3()): Affine3 {
     out.a = 0
     out.b = 0
@@ -230,6 +282,9 @@ export class Affine3 {
     return out
   }
 
+  /**
+   * Composes an affine from translation, orientation and scale.
+   */
   static compose(position: Vector3, orientation: Quaternion, scale: Vector3, out = new Affine3()): Affine3 {
     const { x, y, z, w } = orientation
     const x2 = x + x
@@ -268,6 +323,9 @@ export class Affine3 {
     return out
   }
 
+  /**
+   * Decomposes an affine into translation, orientation and scale.
+   */
   static decompose(affine: Affine3): [Vector3, Quaternion, Vector3] {
     const position = new Vector3()
     const orientation = new Quaternion()
@@ -318,6 +376,9 @@ export class Affine3 {
     return [position, orientation, scale]
   }
 
+  /**
+   * Multiplies two affines (out = affine1 * affine2).
+   */
   static multiply(affine1: Affine3, affine2: Affine3, out = new Affine3()): Affine3 {
     const
       a11 = affine1.a,
@@ -366,6 +427,9 @@ export class Affine3 {
     return out
   }
 
+  /**
+   * Divides two affines (out = affine1 * inverse(affine2)).
+   */
   static divide(affine1: Affine3, affine2: Affine3, out = new Affine3()): Affine3 {
     const multiplier = this.invert(affine2)
 
@@ -374,6 +438,9 @@ export class Affine3 {
     return out
   }
 
+  /**
+   * Inverts an affine.
+   */
   static invert(affine: Affine3, out = new Affine3()): Affine3 {
     const { a, b, c, d, e, f, g, h, i, x, y, z } = affine
     const t11 = i * e - h * f
@@ -403,6 +470,9 @@ export class Affine3 {
     return out
   }
 
+  /**
+   * Translates an affine.
+   */
   static translate(affine: Affine3, translation: Vector3, out = new Affine3()): Affine3 {
     out.a = affine.a
     out.b = affine.b
@@ -420,6 +490,9 @@ export class Affine3 {
     return out
   }
 
+  /**
+   * Rotates an affine by a quaternion.
+   */
   static rotate(affine: Affine3, rotation: Quaternion, out = new Affine3()): Affine3 {
     const { x, y, z } = affine
     const { x: qx, y: qy, z: qz, w: qw } = rotation
@@ -478,6 +551,9 @@ export class Affine3 {
     return out
   }
 
+  /**
+   * Scales an affine by per-axis factors.
+   */
   static scale(affine: Affine3, scale: Vector3, out = new Affine3()): Affine3 {
     out.a = affine.a * scale.x
     out.b = affine.b * scale.x
@@ -492,6 +568,9 @@ export class Affine3 {
     return out
   }
 
+  /**
+   * Creates a look-at transform from eye to target with an up direction.
+   */
   static lookAt(eye: Vector3, target: Vector3, up: Vector3, out = new Affine3()): Affine3 {
     const eyex = eye.x
     const eyey = eye.y
@@ -559,6 +638,9 @@ export class Affine3 {
     return out
   }
 
+  /**
+   * Transforms a vector by an affine.
+   */
   static transform(affine: Affine3, vector: Vector3, out = new Vector3()): Vector3 {
     const { a, b, c, d, e, f, g, h, i, x, y, z } = affine
     const { x: vx, y: vy, z: vz } = vector
@@ -570,6 +652,9 @@ export class Affine3 {
     return out
   }
 
+  /**
+   * Converts this affine to a 4x4 matrix.
+   */
   static toMatrix4(affine: Affine3, out = new Matrix4()): Matrix4 {
     return Matrix4.set(
       affine.a,
@@ -592,6 +677,9 @@ export class Affine3 {
     )
   }
 
+  /**
+   * Checks component-wise equality for two affines.
+   */
   static equal(affine1: Affine3, Affine3: Affine3): boolean {
     return (
       (affine1.a === Affine3.a) &&
@@ -609,6 +697,9 @@ export class Affine3 {
     )
   }
 
+  /**
+   * Iterates over the affine components in row-major order.
+   */
   * [Symbol.iterator](): IterableIterator<number> {
     yield this.a
     yield this.b
@@ -624,7 +715,13 @@ export class Affine3 {
     yield this.z
   }
 
+  /**
+   * The identity affine.
+   */
   static readonly Identity = Affine3.identity()
 
+  /**
+   * The zero affine.
+   */
   static readonly Zero = Affine3.zero()
 }

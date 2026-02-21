@@ -12,78 +12,123 @@ export class Quaternion {
 
   w!: number
 
+  /**
+   * Creates a quaternion from components.
+   */
   constructor(x: number = 0, y: number = 0, z: number = 0, w: number = 1) {
     this.set(x,y,z,w)
   }
 
+  /**
+   * Sets this quaternion from components.
+   */
   set(x: number, y: number, z: number, w: number): this {
     Quaternion.set(x, y, z, w, this)
 
     return this
   }
 
+  /**
+   * Copies another quaternion into this one.
+   */
   copy(quaternion: Quaternion): this {
     Quaternion.copy(quaternion, this)
 
     return this
   }
 
+  /**
+   * Creates a new quaternion with the same components.
+   */
   clone(): Quaternion {
     return new Quaternion().copy(this)
   }
 
+  /**
+   * Negates the vector part of this quaternion.
+   */
   reverse(): this {
     Quaternion.reverse(this, this)
 
     return this
   }
 
+  /**
+   * Computes the dot product with another quaternion.
+   */
   dot(v: Quaternion): number {
     return Quaternion.dot(this, v)
   }
 
+  /**
+   * Returns the squared magnitude of this quaternion.
+   */
   magnitudeSquared(): number {
     return Quaternion.magnitudeSquared(this)
   }
 
+  /**
+   * Returns the magnitude of this quaternion.
+   */
   magnitude(): number {
     return Math.sqrt(Quaternion.magnitude(this))
   }
 
+  /**
+   * Normalizes this quaternion in place.
+   */
   normalize(): this {
     Quaternion.normalize(this, this)
 
     return this
   }
 
+  /**
+   * Multiplies this quaternion by another.
+   */
   multiply(q: Quaternion): this {
     Quaternion.multiply(this, q, this)
 
     return this
   }
 
+  /**
+   * Applies an X-axis rotation to this quaternion.
+   */
   rotateX(angle: number): this {
     Quaternion.rotateX(angle, this)
 
     return this
   }
 
+  /**
+   * Applies a Y-axis rotation to this quaternion.
+   */
   rotateY(angle: number): this {
     Quaternion.rotateY(angle, this)
 
     return this
   }
 
+  /**
+   * Applies a Z-axis rotation to this quaternion.
+   */
   rotateZ(angle: number): this {
     Quaternion.rotateZ(angle, this)
 
     return this
   }
 
+  /**
+   * Checks component-wise equality.
+   */
   equals(quaternion: Quaternion): boolean {
     return Quaternion.equal(this, quaternion)
   }
 
+  /**
+   * Creates or overwrites a quaternion from components.
+   */
   static set(x: number, y: number, z: number, w: number, out = new Quaternion()): Quaternion {
     out.x = x
     out.y = y
@@ -93,6 +138,9 @@ export class Quaternion {
     return out
   }
 
+  /**
+   * Copies a quaternion into an output quaternion.
+   */
   static copy(from: Quaternion, to = new Quaternion()): Quaternion {
     to.x = from.x
     to.y = from.y
@@ -102,6 +150,9 @@ export class Quaternion {
     return to
   }
 
+  /**
+   * Writes the identity quaternion.
+   */
   static identity(out = new Quaternion()): Quaternion {
     out.x = 0
     out.y = 0
@@ -111,6 +162,9 @@ export class Quaternion {
     return out
   }
 
+  /**
+   * Writes the zero quaternion.
+   */
   static zero(out = new Quaternion()): Quaternion {
     out.x = 0
     out.y = 0
@@ -120,14 +174,23 @@ export class Quaternion {
     return out
   }
 
+  /**
+   * Computes the squared magnitude of a quaternion.
+   */
   static magnitudeSquared(q: Quaternion): number {
     return q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w
   }
 
+  /**
+   * Computes the magnitude of a quaternion.
+   */
   static magnitude(q: Quaternion): number {
     return Math.sqrt(this.magnitudeSquared(q))
   }
 
+  /**
+   * Normalizes a quaternion.
+   */
   static normalize(q: Quaternion, out = new Quaternion()): Quaternion {
     const l = this.magnitude(q)
 
@@ -145,6 +208,9 @@ export class Quaternion {
     return out
   }
 
+  /**
+   * Applies an X-axis rotation to a quaternion.
+   */
   static rotateX(angle: number, out = new Quaternion()): Quaternion {
     const halfAngle = angle * 0.5
 
@@ -165,6 +231,9 @@ export class Quaternion {
     )
   }
 
+  /**
+   * Applies a Y-axis rotation to a quaternion.
+   */
   static rotateY(angle: number, out = new Quaternion()): Quaternion {
     const halfAngle = angle * 0.5
 
@@ -185,6 +254,9 @@ export class Quaternion {
     )
   }
 
+  /**
+   * Applies a Z-axis rotation to a quaternion.
+   */
   static rotateZ(angle: number, out = new Quaternion()): Quaternion {
     const halfAngle = angle * 0.5
 
@@ -205,6 +277,9 @@ export class Quaternion {
     )
   }
 
+  /**
+   * Multiplies two quaternions.
+   */
   static multiply(a: Quaternion, b: Quaternion, out = new Quaternion()): Quaternion {
     const qax = a.x
     const qay = a.y
@@ -223,6 +298,9 @@ export class Quaternion {
     return out
   }
 
+  /**
+   * Multiplies a quaternion by a scalar.
+   */
   static multiplyScalar(q: Quaternion, s: number, out = new Quaternion()): Quaternion {
     out.x = q.x * s
     out.y = q.y * s
@@ -232,6 +310,9 @@ export class Quaternion {
     return out
   }
 
+  /**
+   * Negates the vector part of a quaternion.
+   */
   static reverse(a: Quaternion, out = new Quaternion()): Quaternion {
     out.x = -a.x
     out.y = -a.y
@@ -241,14 +322,23 @@ export class Quaternion {
     return out
   }
 
+  /**
+   * Computes the dot product between two quaternions.
+   */
   static dot(q1: Quaternion, q2: Quaternion): number {
     return q1.x * q2.x + q1.y * q2.y + q1.z * q2.z + q1.w * q2.w
   }
 
+  /**
+   * Returns the angular distance between two quaternions.
+   */
   static angleBetween(a: Quaternion, b: Quaternion): number {
     return 2 * Math.acos(Math.abs(clamp(a.dot(b), -1, 1)))
   }
 
+  /**
+   * Builds a quaternion from Euler angles.
+   */
   static fromEuler(x: number, y: number, z: number, out = new Quaternion()): Quaternion {
     const c1 = Math.cos(x / 2)
     const c2 = Math.cos(y / 2)
@@ -266,6 +356,9 @@ export class Quaternion {
     return out
   }
 
+  /**
+   * Builds a quaternion from a rotation matrix.
+   */
   static fromRotationMatrix(matrix: Matrix3, out = new Quaternion()): Quaternion {
     const
       m11 = matrix.a,
@@ -312,6 +405,9 @@ export class Quaternion {
     return out
   }
 
+  /**
+   * Builds a quaternion from an axis and angle.
+   */
   static fromAxisAngle(axis: Vector3, angle: number, out = new Quaternion()): Quaternion {
     const halfAngle = angle * 0.5
     const s = Math.sin(halfAngle)
@@ -324,6 +420,9 @@ export class Quaternion {
     return out
   }
 
+  /**
+   * Rotates a vector by a quaternion in place.
+   */
   static transformVector3(orientation: Quaternion, vector: Vector3): Vector3 {
     const vx = vector.x
     const vy = vector.y
@@ -344,6 +443,9 @@ export class Quaternion {
     return vector
   }
 
+  /**
+   * Spherically interpolates between two quaternions.
+   */
   static slerp(a: Quaternion, b: Quaternion, t: number, out = new Quaternion()): Quaternion | typeof Quaternion {
     if (t === 0) return out.copy(a)
     if (t === 1) return out.copy(b)
@@ -399,10 +501,16 @@ export class Quaternion {
     return this
   }
 
+  /**
+   * Checks component-wise equality for two quaternions.
+   */
   static equal(a: Quaternion, b: Quaternion): boolean {
     return (a.x === b.x) && (a.y === b.y) && (a.z === b.z) && (a.w === b.w)
   }
 
+  /**
+   * Checks approximate equality for two quaternions.
+   */
   static fuzzyEqual(a: Quaternion, b: Quaternion, tolerance?: number): boolean {
     return (
       fuzzyEqual(a.x, b.x, tolerance) &&
@@ -412,6 +520,9 @@ export class Quaternion {
     )
   }
 
+  /**
+   * Creates a uniformly random unit quaternion.
+   */
   static random(out = new Quaternion()): Quaternion {
     const theta1 = 2 * Math.PI * Math.random()
     const theta2 = 2 * Math.PI * Math.random()
@@ -428,6 +539,9 @@ export class Quaternion {
     )
   }
 
+  /**
+   * Iterates over quaternion components in order.
+   */
   * [Symbol.iterator](): IterableIterator<number> {
     yield this.x
     yield this.y
@@ -436,12 +550,12 @@ export class Quaternion {
   }
 
   /**
-   * /
+   * The identity quaternion.
    */
-  static Identity = Quaternion.identity()
+  static readonly Identity = Quaternion.identity()
 
   /**
-   * /
+   * The zero quaternion.
    */
-  static Zero = Quaternion.zero()
+  static readonly Zero = Quaternion.zero()
 }

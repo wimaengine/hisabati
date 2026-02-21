@@ -344,7 +344,7 @@ export class Vector4 {
    *
    * /
    */
-  static Zero = new Vector4()
+  static readonly Zero = new Vector4()
 
   /**
    * Unit vector pointing in the x-axis.

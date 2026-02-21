@@ -2,12 +2,12 @@ import { Rotary } from '../angles'
 import { Vector2 } from '../vectors'
 
 /**
- * A class that is used to transform positions through rotation, scaling and translation.
+ * Represents a 2x3 affine.
+ * Can be used to represent 2 dimensional rotation, scale, skew and translation.
  *
- *  | a | c | e |
- *  |---|---|---|
- *  | b | d | f |
- *
+ * Matrix layout:
+ * | a | c | x |
+ * | b | d | y |
  */
 export class Affine2 {
 
@@ -27,6 +27,9 @@ export class Affine2 {
     Affine2.set(e11, e12, e13, e21, e22, e23, this)
   }
 
+  /**
+   * Sets this affine from raw matrix components.
+   */
   set(e11: number, e12: number, e13: number, e21: number, e22: number, e23: number):this {
     Affine2.set(e11, e12, e13, e21, e22, e23, this)
 
@@ -34,8 +37,7 @@ export class Affine2 {
   }
 
   /**
-   * Copies a affine into this affine.
-   * /
+   * Copies another affine into this one.
    */
   copy(affine: Affine2):this {
     Affine2.copy(affine, this)
@@ -43,38 +45,59 @@ export class Affine2 {
     return this
   }
 
+  /**
+   * Creates a new affine with the same components.
+   */
   clone():Affine2 {
     return new Affine2().copy(this)
   }
 
+  /**
+   * Composes this affine from translation, orientation and scale.
+   */
   compose(translation: Vector2, orientation: Rotary, scale: Vector2):this {
     Affine2.compose(translation, orientation, scale, this)
 
     return this
   }
 
+  /**
+   * Decomposes this affine into translation, orientation and scale.
+   */
   decompose(): [Vector2,Rotary,Vector2] {
     return Affine2.decompose(this)
   }
 
+  /**
+   * Applies a translation to this affine.
+   */
   translate(translation: Vector2):this {
     Affine2.translate(this, translation, this)
 
     return this
   }
 
+  /**
+   * Applies a rotation to this affine.
+   */
   rotate(angle: Rotary):this {
     Affine2.rotate(this, angle, this)
 
     return this
   }
 
+  /**
+   * Applies a scale to this affine.
+   */
   scale(scale: Vector2):this {
     Affine2.scale(this, scale, this)
 
     return this
   }
 
+  /**
+   * Orients this affine to face a target position.
+   */
   lookAt(target: Vector2):this {
     const eye = new Vector2(this.x, this.y)
 
@@ -83,34 +106,49 @@ export class Affine2 {
     return this
   }
 
+  /**
+   * Transforms a vector by this affine in place.
+   */
   transform(vector: Vector2): Vector2 {
     return Affine2.transform(this, vector, vector)
   }
 
+  /**
+   * Inverts this affine in place.
+   */
   invert(): this {
     Affine2.invert(this, this)
 
     return this
   }
 
+  /**
+   * Multiplies this affine by another (this = this * affine).
+   */
   multiply(affine: Affine2): this {
     Affine2.multiply(this, affine, this)
 
     return this
   }
 
+  /**
+   * Divides this affine by another (this = this * inverse(affine)).
+   */
   divide(affine: Affine2): this {
     Affine2.divide(this, affine, this)
 
     return this
   }
 
+  /**
+   * Checks component-wise equality.
+   */
   equals(affine: Affine2):boolean {
     return Affine2.equal(this, affine)
   }
 
   /**
-   * /
+   * Creates or overwrites an affine with raw matrix components.
    */
   static set(e11: number, e12: number, e13: number, e21: number, e22: number, e23: number, out = new Affine2()) {
     out.a = e11
@@ -123,6 +161,9 @@ export class Affine2 {
     return out
   }
 
+  /**
+   * Copies an affine into an output affine.
+   */
   static copy(affine: Affine2, out = new Affine2()):Affine2 {
     out.a = affine.a
     out.b = affine.b
@@ -134,18 +175,27 @@ export class Affine2 {
     return out
   }
 
+  /**
+   * Writes the identity transform.
+   */
   static identity(out = new Affine2()):Affine2 {
     this.set(1, 0, 0, 0, 1, 0, out)
 
     return out
   }
 
+  /**
+   * Writes the zero transform.
+   */
   static zero(out = new Affine2()):Affine2 {
     this.set(0, 0, 0, 0, 0, 0, out)
 
     return out
   }
 
+  /**
+   * Composes an affine from translation, rotation and scale.
+   */
   static compose(translation: Vector2, orientation: Rotary, scale: Vector2, affine = new Affine2()):Affine2 {
     const { cos, sin } = orientation
 
@@ -160,7 +210,7 @@ export class Affine2 {
   }
 
   /**
-   * /
+   * Decomposes an affine into translation, rotation and scale.
    */
   static decompose(
     affine: Affine2,
@@ -183,6 +233,9 @@ export class Affine2 {
     return [position, orientation, scale]
   }
 
+  /**
+   * Multiplies two affines (out = affine1 * affine2).
+   */
   static multiply(affine1: Affine2, affine2: Affine2, out = new Affine2()): Affine2{
     const { a: a1, b: b1, c: c1, d: d1, x: x1, y: y1 } = affine1
     const { a: a2, b: b2, c: c2, d: d2, x: x2, y: y2 } = affine2
@@ -197,6 +250,9 @@ export class Affine2 {
     return out
   }
 
+  /**
+   * Divides two affines (out = affine1 * inverse(affine2)).
+   */
   static divide(affine1: Affine2, affine2: Affine2, out = new Affine2()):Affine2 {
     const multiplier = this.invert(affine2)
 
@@ -205,6 +261,9 @@ export class Affine2 {
     return out
   }
 
+  /**
+   * Inverts an affine.
+   */
   static invert(affine: Affine2, out = new Affine2()):Affine2 {
     const { a, b, c, d, x, y } = affine
     const det = a * d - b * c
@@ -222,6 +281,9 @@ export class Affine2 {
     return out
   }
 
+  /**
+   * Translates an affine.
+   */
   static translate(affine: Affine2, translation: Vector2, out = new Affine2()):Affine2 {
     out.a = affine.a
     out.b = affine.b
@@ -233,6 +295,9 @@ export class Affine2 {
     return out
   }
 
+  /**
+   * Rotates an affine by a rotary angle.
+   */
   static rotate(affine: Affine2, rotary: Rotary, out = new Affine2()): Affine2 {
     const { a, b, c, d, x, y } = affine
     const { cos, sin } = rotary
@@ -247,6 +312,9 @@ export class Affine2 {
     return out
   }
 
+  /**
+   * Scales an affine by per-axis factors.
+   */
   static scale(affine: Affine2, scale: Vector2, out = new Affine2()): Affine2 {
     out.a = affine.a * scale.x
     out.b = affine.b * scale.x
@@ -258,6 +326,9 @@ export class Affine2 {
     return out
   }
 
+  /**
+   * Creates a look-at transform from eye to target.
+   */
   static lookAt(eye: Vector2, target: Vector2, out = new Affine2()):Affine2 {
     const y = Vector2.subtract(target, eye)
 
@@ -277,6 +348,9 @@ export class Affine2 {
     return out
   }
 
+  /**
+   * Transforms a vector by an affine.
+   */
   static transform(affine: Affine2, v: Vector2, out = new Vector2()):Vector2 {
     const { a, b, c, d, x, y } = affine
     const { x: vx, y: vy } = v
@@ -287,6 +361,9 @@ export class Affine2 {
     return out
   }
 
+  /**
+   * Checks component-wise equality for two affines.
+   */
   static equal(affine1: Affine2, affine2: Affine2):boolean {
     return (
       (affine1.a === affine2.a) &&
@@ -298,6 +375,9 @@ export class Affine2 {
     )
   }
 
+  /**
+   * Iterates over the affine components in row-major order.
+   */
   * [Symbol.iterator](): IterableIterator<number> {
     yield this.a
     yield this.b
@@ -307,7 +387,13 @@ export class Affine2 {
     yield this.y
   }
 
+  /**
+   * The identity affine.
+   */
   static readonly Identity = Affine2.identity()
 
+  /**
+   * The zero affine.
+   */
   static readonly Zero = Affine2.zero()
 }

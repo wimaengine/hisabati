@@ -348,7 +348,7 @@ export class Vector3 {
    *
    * /
    */
-  static Zero = new Vector3()
+  static readonly Zero = new Vector3()
 
   /**
    * Unit vector pointing in the x-axis.

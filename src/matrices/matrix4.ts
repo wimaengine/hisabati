@@ -4,99 +4,96 @@ import { invert } from '../functions'
  * Represents a 4x4 square matrix.
  * Can be used to represent 3 dimensional rotation, scale and skew.
  *
- * Column major.
- *
- *  | a | e | i | m |
- *  |---|---|---|---|
- *  | b | f | j | n |
- *  | c | g | k | o |
- *  | d | h | l | p |
- * /
+ * Column major layout:
+ * | a | e | i | m |
+ * | b | f | j | n |
+ * | c | g | k | o |
+ * | d | h | l | p |
  */
 export class Matrix4 {
 
   /**
-   * /
+   * Matrix element a (row 1, column 1).
    */
   a = 1
 
   /**
-   * /
+   * Matrix element b (row 2, column 1).
    */
   b = 0
 
   /**
-   * /
+   * Matrix element c (row 3, column 1).
    */
   c = 0
 
   /**
-   * /
+   * Matrix element d (row 4, column 1).
    */
   d = 0
 
   /**
-   * /
+   * Matrix element e (row 1, column 2).
    */
   e = 0
 
   /**
-   * /
+   * Matrix element f (row 2, column 2).
    */
   f = 1
 
   /**
-   * /
+   * Matrix element g (row 3, column 2).
    */
   g = 0
 
   /**
-   * /
+   * Matrix element h (row 4, column 2).
    */
   h = 0
 
   /**
-   * /
+   * Matrix element i (row 1, column 3).
    */
   i = 0
 
   /**
-   * /
+   * Matrix element j (row 2, column 3).
    */
   j = 0
 
   /**
-   * /
+   * Matrix element k (row 3, column 3).
    */
   k = 1
 
   /**
-   * /
+   * Matrix element l (row 4, column 3).
    */
   l = 0
 
   /**
-   * /
+   * Matrix element m (row 1, column 4).
    */
   m = 0
 
   /**
-   * /
+   * Matrix element n (row 2, column 4).
    */
   n = 0
 
   /**
-   * /
+   * Matrix element o (row 3, column 4).
    */
   o = 0
 
   /**
-   * /
+   * Matrix element p (row 4, column 4).
    */
   p = 1
 
   /**
-   * /
+   * Creates a matrix from raw components.
    */
   constructor(
     n11: number = 1,
@@ -137,6 +134,9 @@ export class Matrix4 {
     )
   }
 
+  /**
+   * Sets this matrix from raw components.
+   */
   set(
     e11: number,
     e12: number,
@@ -160,90 +160,135 @@ export class Matrix4 {
     return this
   }
 
+  /**
+   * Copies another matrix into this one.
+   */
   copy(other: Matrix4): this {
     Matrix4.copy(other, this)
 
     return this
   }
 
+  /**
+   * Creates a new matrix with the same components.
+   */
   clone(): Matrix4 {
     return Matrix4.copy(this)
   }
 
+  /**
+   * Transposes this matrix in place.
+   */
   transpose(): this {
     Matrix4.transpose(this, this)
 
     return this
   }
 
+  /**
+   * Returns the determinant of this matrix.
+   */
   determinant(): number {
     return Matrix4.determinant(this)
   }
 
+  /**
+   * Returns the trace of this matrix.
+   */
   trace(): number {
     return Matrix4.trace(this)
   }
 
+  /**
+   * Adds another matrix to this one.
+   */
   add(matrix: Matrix4): this {
     Matrix4.add(this, matrix, this)
 
     return this
   }
 
+  /**
+   * Adds a scalar to each element.
+   */
   addScalar(scalar: number): this {
     Matrix4.addScalar(this, scalar, this)
 
     return this
   }
 
+  /**
+   * Subtracts another matrix from this one.
+   */
   subtract(matrix: Matrix4): this {
     Matrix4.subtract(this, matrix, this)
 
     return this
   }
 
+  /**
+   * Subtracts a scalar from each element.
+   */
   subtractScalar(scalar: number): this {
     Matrix4.subtractScalar(this, scalar, this)
 
     return this
   }
 
+  /**
+   * Multiplies this matrix by another.
+   */
   multiply(matrix: Matrix4): this {
     Matrix4.multiply(this, matrix, this)
 
     return this
   }
 
+  /**
+   * Multiplies each element by a scalar.
+   */
   multiplyScalar(scalar: number): this {
     Matrix4.multiplyScalar(this, scalar, this)
 
     return this
   }
 
+  /**
+   * Divides this matrix by another (this = this * inverse(matrix)).
+   */
   divide(matrix: Matrix4): this {
     Matrix4.divide(this, matrix, this)
 
     return this
   }
 
+  /**
+   * Divides each element by a scalar.
+   */
   divideScalar(scalar: number): this {
     Matrix4.divideScalar(this, scalar, this)
 
     return this
   }
 
+  /**
+   * Inverts this matrix in place.
+   */
   invert(): this {
     Matrix4.invert(this, this)
 
     return this
   }
 
+  /**
+   * Checks component-wise equality.
+   */
   equals(matrix: Matrix4): boolean {
     return Matrix4.equal(this, matrix)
   }
 
   /**
-   * /
+   * Creates or overwrites a matrix from raw components.
    */
   static set(
     n11: number = 1,
@@ -284,6 +329,9 @@ export class Matrix4 {
     return out
   }
 
+  /**
+   * Copies a matrix into an output matrix.
+   */
   static copy(matrix: Matrix4, out = new Matrix4()): Matrix4 {
     out.a = matrix.a
     out.b = matrix.b
@@ -305,6 +353,9 @@ export class Matrix4 {
     return out
   }
 
+  /**
+   * Transposes a matrix.
+   */
   static transpose(matrix: Matrix4, out = new Matrix4()): Matrix4 {
     let tmp
 
@@ -340,6 +391,9 @@ export class Matrix4 {
     return out
   }
 
+  /**
+   * Writes the identity matrix.
+   */
   static identity(out = new Matrix4()): Matrix4 {
     Matrix4.set(
       // eslint-disable function-call
@@ -365,6 +419,9 @@ export class Matrix4 {
     return out
   }
 
+  /**
+   * Writes the zero matrix.
+   */
   static zero(out = new Matrix4()): Matrix4 {
     Matrix4.set(
       0,
@@ -389,6 +446,9 @@ export class Matrix4 {
     return out
   }
 
+  /**
+   * Computes the determinant of a matrix.
+   */
   static determinant(matrix: Matrix4): number {
     const n11 = matrix.a
     const n12 = matrix.e
@@ -443,10 +503,16 @@ export class Matrix4 {
     )
   }
 
+  /**
+   * Computes the trace of a matrix.
+   */
   static trace(matrix: Matrix4): number {
     return matrix.a + matrix.f + matrix.k + matrix.p
   }
 
+  /**
+   * Adds two matrices.
+   */
   static add(matrix1: Matrix4, matrix2: Matrix4, out = new Matrix4()): Matrix4 {
     out.a = matrix1.a + matrix2.a
     out.b = matrix1.b + matrix2.b
@@ -468,6 +534,9 @@ export class Matrix4 {
     return out
   }
 
+  /**
+   * Adds a scalar to each element.
+   */
   static addScalar(matrix: Matrix4, scalar: number, out = new Matrix4()): Matrix4 {
     out.a = matrix.a + scalar
     out.b = matrix.b + scalar
@@ -489,6 +558,9 @@ export class Matrix4 {
     return out
   }
 
+  /**
+   * Subtracts two matrices.
+   */
   static subtract(matrix1: Matrix4, matrix2: Matrix4, out = new Matrix4()): Matrix4 {
     out.a = matrix1.a - matrix2.a
     out.b = matrix1.b - matrix2.b
@@ -510,6 +582,9 @@ export class Matrix4 {
     return out
   }
 
+  /**
+   * Subtracts a scalar from each element.
+   */
   static subtractScalar(matrix: Matrix4, scalar: number, out = new Matrix4()): Matrix4 {
     out.a = matrix.a - scalar
     out.b = matrix.b - scalar
@@ -531,6 +606,9 @@ export class Matrix4 {
     return out
   }
 
+  /**
+   * Multiplies two matrices.
+   */
   static multiply(matrix1: Matrix4, matrix2: Matrix4, out = new Matrix4()): Matrix4 {
     const
       a11 = matrix1.a,
@@ -591,6 +669,9 @@ export class Matrix4 {
     return out
   }
 
+  /**
+   * Multiplies a matrix by a scalar.
+   */
   static multiplyScalar(matrix: Matrix4, scalar: number, out = new Matrix4()): Matrix4 {
     out.a = matrix.a * scalar
     out.b = matrix.b * scalar
@@ -612,6 +693,9 @@ export class Matrix4 {
     return out
   }
 
+  /**
+   * Divides two matrices (out = matrix1 * inverse(matrix2)).
+   */
   static divide(matrix1: Matrix4, matrix2: Matrix4, out = new Matrix4()): Matrix4 {
     const multiplier = this.invert(matrix2)
 
@@ -620,12 +704,18 @@ export class Matrix4 {
     return out
   }
 
+  /**
+   * Divides a matrix by a scalar.
+   */
   static divideScalar(matrix: Matrix4, scalar: number, out = new Matrix4()): Matrix4 {
     this.multiplyScalar(matrix, invert(scalar), out)
 
     return out
   }
 
+  /**
+   * Inverts a matrix.
+   */
   static invert(matrix: Matrix4, out = new Matrix4()): Matrix4 {
     const n11 = matrix.a
     const n21 = matrix.b
@@ -678,6 +768,9 @@ export class Matrix4 {
     return out
   }
 
+  /**
+   * Checks component-wise equality for two matrices.
+   */
   static equal(matrix1: Matrix4, matrix2: Matrix4): boolean {
     return (
       matrix1.a === matrix2.a &&
@@ -699,6 +792,9 @@ export class Matrix4 {
     )
   }
 
+  /**
+   * Iterates over the matrix components in column-major order.
+   */
   * [Symbol.iterator](): IterableIterator<number> {
     yield this.a
     yield this.b
@@ -719,12 +815,12 @@ export class Matrix4 {
   }
 
   /**
-   * /
+   * The identity matrix.
    */
-  static Identity = Matrix4.identity()
+  static readonly Identity = Matrix4.identity()
 
   /**
-   * /
+   * The zero matrix.
    */
-  static Zero = Matrix4.zero()
+  static readonly Zero = Matrix4.zero()
 }

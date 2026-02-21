@@ -3,15 +3,12 @@ import { Vector3 } from '../vectors'
 
 /**
  * Represents a 3x3 square matrix.
- * Can br used to represent 3 dimensional rotation, scale and skew.
+ * Can be used to represent 3 dimensional rotation, scale and skew.
  *
- * Column major.
- *
- *  | a | d | g |
- *  |---|---|---|
- *  | b | e | h |
- *  | c | f | i |
- * /
+ * Column major layout:
+ * | a | d | g |
+ * | b | e | h |
+ * | c | f | i |
  */
 export class Matrix3 {
 
@@ -33,6 +30,9 @@ export class Matrix3 {
 
   i!: number
 
+  /**
+   * Creates a matrix from raw components.
+   */
   constructor(
     e11: number = 1,
     e12: number = 0,
@@ -55,6 +55,9 @@ export class Matrix3 {
     this.i = e33
   }
 
+  /**
+   * Sets this matrix from raw components.
+   */
   set(
     e11: number,
     e12: number,
@@ -71,90 +74,135 @@ export class Matrix3 {
     return this
   }
 
+  /**
+   * Copies another matrix into this one.
+   */
   copy(other: Matrix3): this {
     Matrix3.copy(other, this)
 
     return this
   }
 
+  /**
+   * Creates a new matrix with the same components.
+   */
   clone(): Matrix3 {
     return Matrix3.copy(this)
   }
 
+  /**
+   * Transposes this matrix in place.
+   */
   transpose(): this {
     Matrix3.transpose(this, this)
 
     return this
   }
 
+  /**
+   * Returns the determinant of this matrix.
+   */
   determinant(): number {
     return Matrix3.determinant(this)
   }
 
+  /**
+   * Returns the trace of this matrix.
+   */
   trace(): number {
     return Matrix3.trace(this)
   }
 
+  /**
+   * Adds another matrix to this one.
+   */
   add(matrix: Matrix3): this {
     Matrix3.add(this, matrix, this)
 
     return this
   }
 
+  /**
+   * Adds a scalar to each element.
+   */
   addScalar(scalar: number): this {
     Matrix3.addScalar(this, scalar, this)
 
     return this
   }
 
+  /**
+   * Subtracts another matrix from this one.
+   */
   subtract(matrix: Matrix3): this {
     Matrix3.subtract(this, matrix, this)
 
     return this
   }
 
+  /**
+   * Subtracts a scalar from each element.
+   */
   subtractScalar(scalar: number): this {
     Matrix3.subtractScalar(this, scalar, this)
 
     return this
   }
 
+  /**
+   * Multiplies this matrix by another.
+   */
   multiply(matrix: Matrix3): this {
     Matrix3.multiply(this, matrix, this)
 
     return this
   }
 
+  /**
+   * Multiplies each element by a scalar.
+   */
   multiplyScalar(scalar: number): this {
     Matrix3.multiplyScalar(this, scalar, this)
 
     return this
   }
 
+  /**
+   * Divides this matrix by another (this = this * inverse(matrix)).
+   */
   divide(matrix: Matrix3): this {
     Matrix3.divide(this, matrix, this)
 
     return this
   }
 
+  /**
+   * Divides each element by a scalar.
+   */
   divideScalar(scalar: number): this {
     Matrix3.divideScalar(this, scalar, this)
 
     return this
   }
 
+  /**
+   * Inverts this matrix in place.
+   */
   invert(): this {
     Matrix3.invert(this, this)
 
     return this
   }
 
+  /**
+   * Checks component-wise equality.
+   */
   equals(matrix: Matrix3): boolean {
     return Matrix3.equal(this, matrix)
   }
 
   /**
-   * /
+   * Creates or overwrites a matrix from raw components.
    */
   static set(
     e11: number,
@@ -181,6 +229,9 @@ export class Matrix3 {
     return out
   }
 
+  /**
+   * Copies a matrix into an output matrix.
+   */
   static copy(matrix: Matrix3, out = new Matrix3()): Matrix3 {
     out.a = matrix.a
     out.b = matrix.b
@@ -195,6 +246,9 @@ export class Matrix3 {
     return out
   }
 
+  /**
+   * Transposes a matrix.
+   */
   static transpose(matrix: Matrix3, out = new Matrix3()): Matrix3 {
     const { a, b, c, d, e, f, g, h, i } = matrix
 
@@ -211,26 +265,41 @@ export class Matrix3 {
     return out
   }
 
+  /**
+   * Writes the identity matrix.
+   */
   static identity(out = new Matrix3()): Matrix3 {
     Matrix3.set(1, 0, 0, 0, 1, 0, 0, 0, 1, out)
 
     return out
   }
 
+  /**
+   * Writes the zero matrix.
+   */
   static zero(out = new Matrix3()): Matrix3 {
     Matrix3.set(0, 0, 0, 0, 0, 0, 0, 0, 0, out)
 
     return out
   }
 
+  /**
+   * Computes the determinant of a matrix.
+   */
   static determinant(matrix: Matrix3): number {
     return matrix.a * matrix.e * matrix.i - matrix.a * matrix.f * matrix.h - matrix.b * matrix.d * matrix.i + matrix.b * matrix.f * matrix.g + matrix.c * matrix.d * matrix.h - matrix.c * matrix.e * matrix.g
   }
 
+  /**
+   * Computes the trace of a matrix.
+   */
   static trace(matrix: Matrix3): number {
     return matrix.a + matrix.e + matrix.i
   }
 
+  /**
+   * Adds two matrices.
+   */
   static add(matrix1: Matrix3, matrix2: Matrix3, out = new Matrix3()): Matrix3 {
     out.a = matrix1.a + matrix2.a
     out.b = matrix1.b + matrix2.b
@@ -245,6 +314,9 @@ export class Matrix3 {
     return out
   }
 
+  /**
+   * Adds a scalar to each element.
+   */
   static addScalar(matrix: Matrix3, scalar: number, out = new Matrix3()): Matrix3 {
     out.a = matrix.a + scalar
     out.b = matrix.b + scalar
@@ -259,6 +331,9 @@ export class Matrix3 {
     return out
   }
 
+  /**
+   * Subtracts two matrices.
+   */
   static subtract(matrix1: Matrix3, matrix2: Matrix3, out = new Matrix3()): Matrix3 {
     out.a = matrix1.a - matrix2.a
     out.b = matrix1.b - matrix2.b
@@ -273,6 +348,9 @@ export class Matrix3 {
     return out
   }
 
+  /**
+   * Subtracts a scalar from each element.
+   */
   static subtractScalar(matrix: Matrix3, scalar: number, out = new Matrix3()): Matrix3 {
     out.a = matrix.a - scalar
     out.b = matrix.b - scalar
@@ -287,6 +365,9 @@ export class Matrix3 {
     return out
   }
 
+  /**
+   * Multiplies two matrices.
+   */
   static multiply(matrix1: Matrix3, matrix2: Matrix3, out = new Matrix3()): Matrix3 {
     const a11 = matrix1.a
     const a12 = matrix1.d
@@ -323,6 +404,9 @@ export class Matrix3 {
     return out
   }
 
+  /**
+   * Multiplies a matrix by a scalar.
+   */
   static multiplyScalar(matrix: Matrix3, scalar: number, out = new Matrix3()): Matrix3 {
     out.a = matrix.a * scalar
     out.b = matrix.b * scalar
@@ -337,6 +421,9 @@ export class Matrix3 {
     return out
   }
 
+  /**
+   * Divides two matrices (out = matrix1 * inverse(matrix2)).
+   */
   static divide(matrix1: Matrix3, matrix2: Matrix3, out = new Matrix3()): Matrix3 {
     const multiplier = this.invert(matrix2)
 
@@ -345,12 +432,18 @@ export class Matrix3 {
     return out
   }
 
+  /**
+   * Divides a matrix by a scalar.
+   */
   static divideScalar(matrix: Matrix3, scalar: number, out = new Matrix3()): Matrix3 {
     this.multiplyScalar(matrix, invert(scalar), out)
 
     return out
   }
 
+  /**
+   * Inverts a matrix.
+   */
   static invert(matrix: Matrix3, out = new Matrix3()): Matrix3 {
     const
       { a, b, c, d, e, f, g, h, i } = matrix
@@ -378,6 +471,9 @@ export class Matrix3 {
     return out
   }
 
+  /**
+   * Checks component-wise equality for two matrices.
+   */
   static equal(matrix1: Matrix3, matrix2: Matrix3): boolean {
     return (
       matrix1.a === matrix2.a &&
@@ -392,6 +488,9 @@ export class Matrix3 {
     )
   }
 
+  /**
+   * Builds a rotation matrix from Euler angles.
+   */
   static fromEuler(euler: Vector3, out = new Matrix3()): Matrix3 {
     const { x } = euler
     const { y } = euler
@@ -422,6 +521,9 @@ export class Matrix3 {
     return out
   }
 
+  /**
+   * Iterates over the matrix components in column-major order.
+   */
   * [Symbol.iterator](): IterableIterator<number> {
     yield this.a
     yield this.b
@@ -435,12 +537,12 @@ export class Matrix3 {
   }
 
   /**
-   * /
+   * The identity matrix.
    */
-  static Identity = Matrix3.identity()
+  static readonly Identity = Matrix3.identity()
 
   /**
-   * /
+   * The zero matrix.
    */
-  static Zero = Matrix3.zero()
+  static readonly Zero = Matrix3.zero()
 }
