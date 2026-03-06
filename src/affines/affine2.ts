@@ -114,6 +114,13 @@ export class Affine2 {
   }
 
   /**
+   * Transforms a vector by scale and rotation with no translation.
+   */
+  transformWithoutTranslation(vector: Vector2): Vector2 {
+    return Affine2.transformWithoutTranslation(this, vector, vector)
+  }
+
+  /**
    * Inverts this affine in place.
    */
   invert(): this {
@@ -357,6 +364,19 @@ export class Affine2 {
 
     out.x = a * vx + c * vy + x
     out.y = b * vx + d * vy + y
+
+    return out
+  }
+
+  /**
+   * Transforms a vector by an affine's scale and rotation with no translation.
+   */
+    static transformWithoutTranslation(affine: Affine2, v: Vector2, out = new Vector2()):Vector2 {
+    const { a, b, c, d } = affine
+    const { x: vx, y: vy } = v
+
+    out.x = a * vx + c * vy
+    out.y = b * vx + d * vy
 
     return out
   }
