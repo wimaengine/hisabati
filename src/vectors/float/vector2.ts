@@ -1,5 +1,6 @@
 import { TAU } from '../../constants'
-import { invert, lerp } from '../../functions'
+import { invert } from '../../functions'
+import { lerp } from '../../interpolation'
 
 /**
  * This is a 2D vector class.

@@ -1,4 +1,5 @@
-import { invert, lerp } from '../../functions'
+import { invert } from '../../functions'
+import { lerp } from '../../interpolation'
 
 export class Vector3 {
 

@@ -1,6 +1,3 @@
 export * from './clamp'
-export * from './easing'
-export * from './indexmap'
-export * from './interpolation'
 export * from './mathematical'
 export * from './noise'

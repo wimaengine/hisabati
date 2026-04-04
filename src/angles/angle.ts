@@ -1,4 +1,4 @@
-import { lerp } from '../functions'
+import { lerp } from '../interpolation'
 
 /**
  * Wrapper class since JavaScript doesn't support references to numbers explicitly.
