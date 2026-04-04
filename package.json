@@ -1,7 +1,12 @@
 {
   "name": "hisabati",
   "version": "0.1.0",
+  "description": "Modular 2D and 3D math utilities for vectors, matrices, transforms, rotations, and math functions.",
   "type": "module",
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.module.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "test": "node --test",
     "build": "npm run build:types && npm run build:lib",
@@ -19,9 +24,26 @@
     }
   },
   "author": "Wima engine contributors",
+  "license": "MIT",
+  "keywords": [
+    "math",
+    "vector",
+    "matrix",
+    "affine",
+    "quaternion",
+    "transform",
+    "2d",
+    "3d",
+    "game-development",
+    "simulation"
+  ],
+  "homepage": "https://github.com/wimaengine/hisabati#readme",
+  "bugs": {
+    "url": "https://github.com/wimaengine/hisabati/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wimaengine/hisabati.git"
+    "url": "git+https://github.com/wimaengine/hisabati.git"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^16.0.3",
