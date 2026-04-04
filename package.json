@@ -9,11 +9,9 @@
   "sideEffects": false,
   "scripts": {
     "test": "node --test",
-    "build": "npm run build:types && npm run build:lib",
+    "build": "npm run build:lib",
     "build:lib": "rollup -c .config/rollup.config.js",
-    "build:types": "tsc -p .config/type.tsconfig.json",
-    "clean": "npm run clean:types && npm run clean:lib",
-    "clean:types": "rm -r types",
+    "clean": "npm run clean:lib",
     "clean:lib": "rm -r dist"
   },
   "exports": {

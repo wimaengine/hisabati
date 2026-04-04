@@ -37,7 +37,6 @@ export default [{
     name,
     esModule: false,
     exports: "named",
-    sourcemap: true,
     banner
   }
 },
@@ -50,14 +49,13 @@ export default [{
     file: "dist/index.module.js",
     format: "esm",
     exports: "named",
-    sourcemap: true,
     banner
   },
 },
 {
 
   // Declaration
-  input: 'types/index.d.ts',
+  input: 'src/index.ts',
   plugins: [dts()],
   output: {
     file: "dist/index.d.ts",
