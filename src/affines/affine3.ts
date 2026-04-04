@@ -112,80 +112,66 @@ export class Affine3 {
   /**
    * Applies a translation to this affine.
    */
-  translate(translation: Vector3): this {
-    Affine3.translate(this, translation, this)
-
-    return this
+  translate(translation: Vector3): Affine3 {
+    return Affine3.translate(this, translation)
   }
 
   /**
    * Applies a rotation to this affine.
    */
-  rotate(angle: Quaternion): this {
-    Affine3.rotate(this, angle, this)
-
-    return this
+  rotate(angle: Quaternion): Affine3 {
+    return Affine3.rotate(this, angle)
   }
 
   /**
    * Applies a scale to this affine.
    */
-  scale(scale: Vector3): this {
-    Affine3.scale(this, scale, this)
-
-    return this
+  scale(scale: Vector3): Affine3 {
+    return Affine3.scale(this, scale)
   }
 
   /**
    * Orients this affine to face a target position.
    */
-  lookAt(target: Vector3, up: Vector3): this {
+  lookAt(target: Vector3, up: Vector3): Affine3 {
     const eye = new Vector3(this.x, this.y, this.z)
 
-    Affine3.lookAt(eye, target, up, this)
-
-    return this
+    return Affine3.lookAt(eye, target, up)
   }
 
   /**
    * Transforms a vector by this affine in place.
    */
   transform(vector: Vector3): Vector3 {
-    return Affine3.transform(this, vector, vector)
+    return Affine3.transform(this, vector)
   }
 
   /**
    * Transforms a vector by scale and rotation with no translation.
    */
   transformWithoutTranslation(vector: Vector3): Vector3 {
-    return Affine3.transformWithoutTranslation(this, vector, vector)
+    return Affine3.transformWithoutTranslation(this, vector)
   }
 
   /**
    * Inverts this affine in place.
    */
-  invert(): this {
-    Affine3.invert(this, this)
-
-    return this
+  invert(): Affine3 {
+    return Affine3.invert(this)
   }
 
   /**
    * Multiplies this affine by another (this = this * affine).
    */
-  multiply(affine: Affine3): this {
-    Affine3.multiply(this, affine, this)
-
-    return this
+  multiply(affine: Affine3): Affine3 {
+    return Affine3.multiply(this, affine)
   }
 
   /**
    * Divides this affine by another (this = this * inverse(affine)).
    */
-  divide(affine: Affine3): this {
-    Affine3.divide(this, affine, this)
-
-    return this
+  divide(affine: Affine3): Affine3 {
+    return Affine3.divide(this, affine)
   }
 
   /**

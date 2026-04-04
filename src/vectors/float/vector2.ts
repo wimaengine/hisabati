@@ -13,7 +13,7 @@ export class Vector2 {
   y!: number
 
   constructor(x: number = 0, y: number = 0) {
-    this.set(x,y)
+    Vector2.set(x, y, this)
   }
 
   set(x: number, y: number): this {
@@ -54,64 +54,44 @@ export class Vector2 {
     return Vector2.distanceToSquared(this, v)
   }
 
-  normalize(): this {
-    Vector2.normalize(this, this)
-
-    return this
+  normalize(): Vector2 {
+    return Vector2.normalize(this)
   }
 
-  setMagnitude(length: number): this {
-    Vector2.setMagnitude(this, length, this)
-
-    return this
+  setMagnitude(length: number): Vector2 {
+    return Vector2.setMagnitude(this, length)
   }
 
-  add(v: Vector2): this {
-    Vector2.add(this, v, this)
-
-    return this
+  add(v: Vector2): Vector2 {
+    return Vector2.add(this, v)
   }
 
-  addScalar(n: number): this {
-    Vector2.addScalar(this, n, this)
-
-    return this
+  addScalar(n: number): Vector2 {
+    return Vector2.addScalar(this, n)
   }
 
-  subtract(v: Vector2): this {
-    Vector2.subtract(this, v, this)
-
-    return this
+  subtract(v: Vector2): Vector2 {
+    return Vector2.subtract(this, v)
   }
 
-  subtractScalar(n: number): this {
-    Vector2.subtractScalar(this, n, this)
-
-    return this
+  subtractScalar(n: number): Vector2 {
+    return Vector2.subtractScalar(this, n)
   }
 
-  multiply(v: Vector2): this {
-    Vector2.multiply(this, v, this)
-
-    return this
+  multiply(v: Vector2): Vector2 {
+    return Vector2.multiply(this, v)
   }
 
-  multiplyScalar(s: number): this {
-    Vector2.multiplyScalar(this, s, this)
-
-    return this
+  multiplyScalar(s: number): Vector2 {
+    return Vector2.multiplyScalar(this, s)
   }
 
-  divide(v: Vector2): this {
-    Vector2.divide(this, v, this)
-
-    return this
+  divide(v: Vector2): Vector2 {
+    return Vector2.divide(this, v)
   }
 
-  divideScalar(s: number): this {
-    Vector2.divideScalar(this, s, this)
-
-    return this
+  divideScalar(s: number): Vector2 {
+    return Vector2.divideScalar(this, s)
   }
 
   dot(v: Vector2): number {
@@ -122,16 +102,12 @@ export class Vector2 {
     return Vector2.cross(this, v)
   }
 
-  reverse(): this {
-    Vector2.reverse(this, this)
-
-    return this
+  reverse(): Vector2 {
+    return Vector2.reverse(this)
   }
 
-  invert(): this {
-    Vector2.invert(this, this)
-
-    return this
+  invert(): Vector2 {
+    return Vector2.invert(this)
   }
 
   equals(v: Vector2): boolean {

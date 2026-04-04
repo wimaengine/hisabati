@@ -55,10 +55,8 @@ export class Matrix2 {
   /**
    * Transposes this matrix in place.
    */
-  transpose(): this {
-    Matrix2.transpose(this, this)
-
-    return this
+  transpose(): Matrix2 {
+    return Matrix2.transpose(this)
   }
 
   /**
@@ -78,82 +76,64 @@ export class Matrix2 {
   /**
    * Adds another matrix to this one.
    */
-  add(matrix: Matrix2): this {
-    Matrix2.add(this, matrix, this)
-
-    return this
+  add(matrix: Matrix2): Matrix2 {
+    return Matrix2.add(this, matrix)
   }
 
   /**
    * Adds a scalar to each element.
    */
-  addScalar(scalar: number): this {
-    Matrix2.addScalar(this, scalar, this)
-
-    return this
+  addScalar(scalar: number): Matrix2 {
+    return Matrix2.addScalar(this, scalar)
   }
 
   /**
    * Subtracts another matrix from this one.
    */
-  subtract(matrix: Matrix2): this {
-    Matrix2.subtract(this, matrix, this)
-
-    return this
+  subtract(matrix: Matrix2): Matrix2 {
+    return Matrix2.subtract(this, matrix)
   }
 
   /**
    * Subtracts a scalar from each element.
    */
-  subtractScalar(scalar: number): this {
-    Matrix2.subtractScalar(this, scalar, this)
-
-    return this
+  subtractScalar(scalar: number): Matrix2 {
+    return Matrix2.subtractScalar(this, scalar)
   }
 
   /**
    * Multiplies this matrix by another.
    */
-  multiply(matrix: Matrix2): this {
-    Matrix2.multiply(this, matrix, this)
-
-    return this
+  multiply(matrix: Matrix2): Matrix2 {
+    return Matrix2.multiply(this, matrix)
   }
 
   /**
    * Multiplies each element by a scalar.
    */
-  multiplyScalar(scalar: number): this {
-    Matrix2.multiplyScalar(this, scalar, this)
-
-    return this
+  multiplyScalar(scalar: number): Matrix2 {
+    return Matrix2.multiplyScalar(this, scalar)
   }
 
   /**
    * Divides this matrix by another (this = this * inverse(matrix)).
    */
-  divide(matrix: Matrix2): this {
-    Matrix2.divide(this, matrix, this)
-
-    return this
+  divide(matrix: Matrix2): Matrix2 {
+    return Matrix2.divide(this, matrix)
   }
 
   /**
    * Divides each element by a scalar.
    */
-  divideScalar(scalar: number): this {
-    Matrix2.divideScalar(this, scalar, this)
-
-    return this
+  divideScalar(scalar: number): Matrix2 {
+    return Matrix2.divideScalar(this, scalar)
   }
 
   /**
    * Inverts this matrix in place.
    */
-  invert(): this {
-    Matrix2.invert(this, this)
-
-    return this
+  invert(): Matrix2 {
+    return Matrix2.invert(this)
   }
 
   /**

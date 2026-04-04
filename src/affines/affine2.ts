@@ -30,7 +30,7 @@ export class Affine2 {
   /**
    * Sets this affine from raw matrix components.
    */
-  set(e11: number, e12: number, e13: number, e21: number, e22: number, e23: number):this {
+  set(e11: number, e12: number, e13: number, e21: number, e22: number, e23: number): this {
     Affine2.set(e11, e12, e13, e21, e22, e23, this)
 
     return this
@@ -39,7 +39,7 @@ export class Affine2 {
   /**
    * Copies another affine into this one.
    */
-  copy(affine: Affine2):this {
+  copy(affine: Affine2): this {
     Affine2.copy(affine, this)
 
     return this
@@ -48,14 +48,14 @@ export class Affine2 {
   /**
    * Creates a new affine with the same components.
    */
-  clone():Affine2 {
+  clone(): Affine2 {
     return new Affine2().copy(this)
   }
 
   /**
    * Composes this affine from translation, orientation and scale.
    */
-  compose(translation: Vector2, orientation: Rotary, scale: Vector2):this {
+  compose(translation: Vector2, orientation: Rotary, scale: Vector2): this {
     Affine2.compose(translation, orientation, scale, this)
 
     return this
@@ -71,80 +71,66 @@ export class Affine2 {
   /**
    * Applies a translation to this affine.
    */
-  translate(translation: Vector2):this {
-    Affine2.translate(this, translation, this)
-
-    return this
+  translate(translation: Vector2): Affine2 {
+    return Affine2.translate(this, translation)
   }
 
   /**
    * Applies a rotation to this affine.
    */
-  rotate(angle: Rotary):this {
-    Affine2.rotate(this, angle, this)
-
-    return this
+  rotate(angle: Rotary): Affine2 {
+    return Affine2.rotate(this, angle)
   }
 
   /**
    * Applies a scale to this affine.
    */
-  scale(scale: Vector2):this {
-    Affine2.scale(this, scale, this)
-
-    return this
+  scale(scale: Vector2): Affine2 {
+    return Affine2.scale(this, scale)
   }
 
   /**
    * Orients this affine to face a target position.
    */
-  lookAt(target: Vector2):this {
+  lookAt(target: Vector2): Affine2 {
     const eye = new Vector2(this.x, this.y)
 
-    Affine2.lookAt(eye, target, this)
-
-    return this
+    return Affine2.lookAt(eye, target)
   }
 
   /**
    * Transforms a vector by this affine in place.
    */
   transform(vector: Vector2): Vector2 {
-    return Affine2.transform(this, vector, vector)
+    return Affine2.transform(this, vector)
   }
 
   /**
    * Transforms a vector by scale and rotation with no translation.
    */
   transformWithoutTranslation(vector: Vector2): Vector2 {
-    return Affine2.transformWithoutTranslation(this, vector, vector)
+    return Affine2.transformWithoutTranslation(this, vector)
   }
 
   /**
    * Inverts this affine in place.
    */
-  invert(): this {
-    Affine2.invert(this, this)
-
-    return this
+  invert(): Affine2 {
+    return Affine2.invert(this)
   }
 
   /**
    * Multiplies this affine by another (this = this * affine).
    */
-  multiply(affine: Affine2): this {
-    Affine2.multiply(this, affine, this)
-
-    return this
+  multiply(affine: Affine2): Affine2 {
+    return Affine2.multiply(this, affine)
   }
 
   /**
    * Divides this affine by another (this = this * inverse(affine)).
    */
-  divide(affine: Affine2): this {
-    Affine2.divide(this, affine, this)
-
-    return this
+  divide(affine: Affine2): Affine2 {
+    return Affine2.divide(this, affine)
   }
 
   /**

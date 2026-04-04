@@ -16,7 +16,7 @@ export class Quaternion {
    * Creates a quaternion from components.
    */
   constructor(x: number = 0, y: number = 0, z: number = 0, w: number = 1) {
-    this.set(x,y,z,w)
+    Quaternion.set(x, y, z, w, this)
   }
 
   /**
@@ -47,10 +47,8 @@ export class Quaternion {
   /**
    * Negates the vector part of this quaternion.
    */
-  reverse(): this {
-    Quaternion.reverse(this, this)
-
-    return this
+  reverse(): Quaternion {
+    return Quaternion.reverse(this)
   }
 
   /**
@@ -71,52 +69,42 @@ export class Quaternion {
    * Returns the magnitude of this quaternion.
    */
   magnitude(): number {
-    return Math.sqrt(Quaternion.magnitude(this))
+    return Quaternion.magnitude(this)
   }
 
   /**
    * Normalizes this quaternion in place.
    */
-  normalize(): this {
-    Quaternion.normalize(this, this)
-
-    return this
+  normalize(): Quaternion {
+    return Quaternion.normalize(this)
   }
 
   /**
    * Multiplies this quaternion by another.
    */
-  multiply(q: Quaternion): this {
-    Quaternion.multiply(this, q, this)
-
-    return this
+  multiply(q: Quaternion): Quaternion {
+    return Quaternion.multiply(this, q)
   }
 
   /**
    * Applies an X-axis rotation to this quaternion.
    */
-  rotateX(angle: number): this {
-    Quaternion.rotateX(angle, this)
-
-    return this
+  rotateX(angle: number): Quaternion {
+    return Quaternion.rotateX(angle, Quaternion.copy(this))
   }
 
   /**
    * Applies a Y-axis rotation to this quaternion.
    */
-  rotateY(angle: number): this {
-    Quaternion.rotateY(angle, this)
-
-    return this
+  rotateY(angle: number): Quaternion {
+    return Quaternion.rotateY(angle, Quaternion.copy(this))
   }
 
   /**
    * Applies a Z-axis rotation to this quaternion.
    */
-  rotateZ(angle: number): this {
-    Quaternion.rotateZ(angle, this)
-
-    return this
+  rotateZ(angle: number): Quaternion {
+    return Quaternion.rotateZ(angle, Quaternion.copy(this))
   }
 
   /**

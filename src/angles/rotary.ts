@@ -12,7 +12,7 @@ export class Rotary {
    * Creates a rotary from cosine and sine.
    */
   constructor(cos: number = 1, sin: number = 0) {
-    this.set(cos, sin)
+    Rotary.set(cos, sin, this)
   }
 
   /**
@@ -57,37 +57,29 @@ export class Rotary {
   /**
    * Normalizes this rotary in place.
    */
-  normalize(): this {
-    Rotary.normalize(this, this)
-
-    return this
+  normalize(): Rotary {
+    return Rotary.normalize(this)
   }
 
   /**
    * Rotates this rotary by an angle.
    */
-  rotate(angle: number): this {
-    Rotary.rotate(angle, this)
-
-    return this
+  rotate(angle: number): Rotary {
+    return Rotary.rotate(angle, Rotary.copy(this))
   }
 
   /**
    * Multiplies this rotary by another.
    */
-  multiply(rotary: Rotary): this {
-    Rotary.multiply(rotary, this, this)
-
-    return this
+  multiply(rotary: Rotary): Rotary {
+    return Rotary.multiply(this, rotary)
   }
 
   /**
    * Multiplies this rotary by a scalar.
    */
-  multiplyScalar(scalar: number): this {
-    Rotary.multiplyScalar(this, scalar, this)
-
-    return this
+  multiplyScalar(scalar: number): Rotary {
+    return Rotary.multiplyScalar(this, scalar)
   }
 
   /**
@@ -100,10 +92,8 @@ export class Rotary {
   /**
    * Negates the sine component.
    */
-  reverse(): this {
-    Rotary.reverse(this, this)
-
-    return this
+  reverse(): Rotary {
+    return Rotary.reverse(this)
   }
 
   /**

@@ -9,7 +9,7 @@ export class Vector3 {
   z!: number
 
   constructor(x: number = 0, y: number = 0, z: number = 0) {
-    this.set(x,y,z)
+    Vector3.set(x, y, z, this)
   }
 
   set(x: number, y: number, z: number): this {
@@ -50,86 +50,60 @@ export class Vector3 {
     return Vector3.distanceToSquared(this, v)
   }
 
-  normalize(): this {
-    Vector3.normalize(this, this)
-
-    return this
+  normalize(): Vector3 {
+    return Vector3.normalize(this)
   }
 
-  setMagnitude(length: number): this {
-    Vector3.setMagnitude(this, length, this)
-
-    return this
+  setMagnitude(length: number): Vector3 {
+    return Vector3.setMagnitude(this, length)
   }
 
-  add(v: Vector3): this {
-    Vector3.add(this, v, this)
-
-    return this
+  add(v: Vector3): Vector3 {
+    return Vector3.add(this, v)
   }
 
-  addScalar(n: number): this {
-    Vector3.addScalar(this, n, this)
-
-    return this
+  addScalar(n: number): Vector3 {
+    return Vector3.addScalar(this, n)
   }
 
-  subtract(v: Vector3): this {
-    Vector3.subtract(this, v, this)
-
-    return this
+  subtract(v: Vector3): Vector3 {
+    return Vector3.subtract(this, v)
   }
 
-  subtractScalar(n: number): this {
-    Vector3.subtractScalar(this, n, this)
-
-    return this
+  subtractScalar(n: number): Vector3 {
+    return Vector3.subtractScalar(this, n)
   }
 
-  multiply(v: Vector3): this {
-    Vector3.multiply(this, v, this)
-
-    return this
+  multiply(v: Vector3): Vector3 {
+    return Vector3.multiply(this, v)
   }
 
-  multiplyScalar(s: number): this {
-    Vector3.multiplyScalar(this, s, this)
-
-    return this
+  multiplyScalar(s: number): Vector3 {
+    return Vector3.multiplyScalar(this, s)
   }
 
-  divide(v: Vector3): this {
-    Vector3.divide(this, v, this)
-
-    return this
+  divide(v: Vector3): Vector3 {
+    return Vector3.divide(this, v)
   }
 
-  divideScalar(s: number): this {
-    Vector3.divideScalar(this, s, this)
-
-    return this
+  divideScalar(s: number): Vector3 {
+    return Vector3.divideScalar(this, s)
   }
 
   dot(v: Vector3): number {
     return Vector3.dot(this, v)
   }
 
-  cross(v: Vector3): this {
-    Vector3.cross(this, v, this)
-
-    return this
+  cross(v: Vector3): Vector3 {
+    return Vector3.cross(this, v)
   }
 
-  reverse(): this {
-    Vector3.reverse(this, this)
-
-    return this
+  reverse(): Vector3 {
+    return Vector3.reverse(this)
   }
 
-  invert(): this {
-    Vector3.invert(this, this)
-
-    return this
+  invert(): Vector3 {
+    return Vector3.invert(this)
   }
 
   equals(v: Vector3): boolean {

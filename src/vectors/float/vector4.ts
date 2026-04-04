@@ -11,7 +11,7 @@ export class Vector4 {
   w!: number
 
   constructor(x: number = 0, y: number = 0, z: number = 0, w: number = 0) {
-    this.set(x,y,z,w)
+    Vector4.set(x, y, z, w, this)
   }
 
   set(x: number, y: number, z: number, w: number): this {
@@ -52,80 +52,56 @@ export class Vector4 {
     return Vector4.distanceToSquared(this, v)
   }
 
-  normalize(): this {
-    Vector4.normalize(this, this)
-
-    return this
+  normalize(): Vector4 {
+    return Vector4.normalize(this)
   }
 
-  setMagnitude(length: number): this {
-    Vector4.setMagnitude(this, length, this)
-
-    return this
+  setMagnitude(length: number): Vector4 {
+    return Vector4.setMagnitude(this, length)
   }
 
-  add(v: Vector4): this {
-    Vector4.add(this, v, this)
-
-    return this
+  add(v: Vector4): Vector4 {
+    return Vector4.add(this, v)
   }
 
-  addScalar(n: number): this {
-    Vector4.addScalar(this, n, this)
-
-    return this
+  addScalar(n: number): Vector4 {
+    return Vector4.addScalar(this, n)
   }
 
-  subtract(v: Vector4): this {
-    Vector4.subtract(this, v, this)
-
-    return this
+  subtract(v: Vector4): Vector4 {
+    return Vector4.subtract(this, v)
   }
 
-  subtractScalar(n: number): this {
-    Vector4.subtractScalar(this, n, this)
-
-    return this
+  subtractScalar(n: number): Vector4 {
+    return Vector4.subtractScalar(this, n)
   }
 
-  multiply(v: Vector4): this {
-    Vector4.multiply(this, v, this)
-
-    return this
+  multiply(v: Vector4): Vector4 {
+    return Vector4.multiply(this, v)
   }
 
-  multiplyScalar(s: number): this {
-    Vector4.multiplyScalar(this, s, this)
-
-    return this
+  multiplyScalar(s: number): Vector4 {
+    return Vector4.multiplyScalar(this, s)
   }
 
-  divide(v: Vector4): this {
-    Vector4.divide(this, v, this)
-
-    return this
+  divide(v: Vector4): Vector4 {
+    return Vector4.divide(this, v)
   }
 
-  divideScalar(s: number): this {
-    Vector4.divideScalar(this, s, this)
-
-    return this
+  divideScalar(s: number): Vector4 {
+    return Vector4.divideScalar(this, s)
   }
 
   dot(v: Vector4): number {
     return Vector4.dot(this, v)
   }
 
-  reverse(): this {
-    Vector4.reverse(this, this)
-
-    return this
+  reverse(): Vector4 {
+    return Vector4.reverse(this)
   }
 
-  invert(): this {
-    Vector4.invert(this, this)
-
-    return this
+  invert(): Vector4 {
+    return Vector4.invert(this)
   }
 
   equals(v: Vector4): boolean {
