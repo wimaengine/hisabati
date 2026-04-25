@@ -1,5 +1,5 @@
 import { TAU } from '../../constants'
-import { invert } from '../../functions'
+import { fuzzyEqual, invert } from '../../functions'
 import { lerp } from '../../interpolation'
 
 /**
@@ -281,6 +281,13 @@ export class Vector2 {
     return v1.x === v2.x && v1.y === v2.y
   }
 
+  static fuzzyEqual(v1: Vector2, v2: Vector2, tolerance: number): boolean {
+    return (
+      fuzzyEqual(v1.x, v2.x, tolerance) &&
+      fuzzyEqual(v1.y, v2.y, tolerance)
+    )
+  }
+
   static normal(v: Vector2, out = new Vector2()): Vector2 {
     return Vector2.set(-v.y, v.x, out)
   }
@@ -318,7 +325,7 @@ export class Vector2 {
     return Vector2.fromAngle(Math.random() * TAU, out)
   }
 
-  * [Symbol.iterator](): IterableIterator<number> {
+  *[Symbol.iterator](): IterableIterator<number> {
     yield this.x
     yield this.y
   }

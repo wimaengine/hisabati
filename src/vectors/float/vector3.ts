@@ -1,4 +1,4 @@
-import { invert } from '../../functions'
+import { fuzzyEqual, invert } from '../../functions'
 import { lerp } from '../../interpolation'
 
 export class Vector3 {
@@ -298,6 +298,14 @@ export class Vector3 {
 
   static equal(v1: Vector3, v2: Vector3): boolean {
     return v1.x === v2.x && v1.y === v2.y && v1.z === v2.z
+  }
+
+  static fuzzyEqual(v1: Vector3, v2: Vector3, tolerance: number): boolean{
+    return (
+      fuzzyEqual(v1.x, v2.x, tolerance) &&
+      fuzzyEqual(v1.y, v2.y, tolerance) &&
+      fuzzyEqual(v1.z, v2.z, tolerance)
+    )
   }
 
   static random(out = new Vector3()): Vector3 {
