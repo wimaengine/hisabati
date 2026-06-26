@@ -25,6 +25,32 @@ describe("Testing `Matrix4`", () => {
         deepStrictEqual(destination, source)
     })
 
+    test("`Matrix4` serializes correctly", () => {
+        const source = new Matrix4(
+            1, 2, 3, 4,
+            5, 6, 7, 8,
+            9, 10, 11, 12,
+            13, 14, 15, 16
+        )
+        const serial = Matrix4.serialize(source)
+
+        deepStrictEqual(serial, [1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 16])
+        deepStrictEqual(source.serialize(), serial)
+        strictEqual(Matrix4.validateSerial(serial), true)
+    })
+
+    test("`Matrix4` deserializes correctly", () => {
+        const serial = [1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 16]
+        const expected = new Matrix4(
+            1, 2, 3, 4,
+            5, 6, 7, 8,
+            9, 10, 11, 12,
+            13, 14, 15, 16
+        )
+
+        deepStrictEqual(Matrix4.deserialize(serial), expected)
+    })
+
     test("`Matrix4.set` sets values corrrectly", () => {
         const expected = new Matrix4(
             1, 2, 3, 4,

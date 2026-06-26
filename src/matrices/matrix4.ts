@@ -177,6 +177,13 @@ export class Matrix4 {
   }
 
   /**
+   * Serializes this matrix.
+   */
+  serialize(): Matrix4Like {
+    return Matrix4.serialize(this)
+  }
+
+  /**
    * Transposes this matrix in place.
    */
   transpose(): Matrix4 {
@@ -331,6 +338,78 @@ export class Matrix4 {
     out.p = matrix.p
 
     return out
+  }
+
+  /**
+   * Serializes a matrix to an array.
+   */
+  static serialize(value: Matrix4): Matrix4Like {
+    return [
+      value.a,
+      value.b,
+      value.c,
+      value.d,
+      value.e,
+      value.f,
+      value.g,
+      value.h,
+      value.i,
+      value.j,
+      value.k,
+      value.l,
+      value.m,
+      value.n,
+      value.o,
+      value.p
+    ]
+  }
+
+  /**
+   * Deserializes a matrix from an array.
+   */
+  static deserialize(value: Matrix4Like, out = new Matrix4()): Matrix4 {
+    out.a = value[0]
+    out.b = value[1]
+    out.c = value[2]
+    out.d = value[3]
+    out.e = value[4]
+    out.f = value[5]
+    out.g = value[6]
+    out.h = value[7]
+    out.i = value[8]
+    out.j = value[9]
+    out.k = value[10]
+    out.l = value[11]
+    out.m = value[12]
+    out.n = value[13]
+    out.o = value[14]
+    out.p = value[15]
+
+    return out
+  }
+
+  /**
+   * Checks whether a value is a valid matrix serial.
+   */
+  static validateSerial(value: unknown): value is Matrix4Like {
+    return Array.isArray(value) &&
+      value.length === 16 &&
+      typeof value[0] === 'number' &&
+      typeof value[1] === 'number' &&
+      typeof value[2] === 'number' &&
+      typeof value[3] === 'number' &&
+      typeof value[4] === 'number' &&
+      typeof value[5] === 'number' &&
+      typeof value[6] === 'number' &&
+      typeof value[7] === 'number' &&
+      typeof value[8] === 'number' &&
+      typeof value[9] === 'number' &&
+      typeof value[10] === 'number' &&
+      typeof value[11] === 'number' &&
+      typeof value[12] === 'number' &&
+      typeof value[13] === 'number' &&
+      typeof value[14] === 'number' &&
+      typeof value[15] === 'number'
   }
 
   /**
@@ -804,3 +883,22 @@ export class Matrix4 {
    */
   static readonly Zero = Matrix4.zero()
 }
+
+export type Matrix4Like = [
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number
+]
