@@ -53,6 +53,13 @@ export class Matrix2 {
   }
 
   /**
+   * Serializes this matrix.
+   */
+  serialize(): Matrix2Like {
+    return Matrix2.serialize(this)
+  }
+
+  /**
    * Transposes this matrix in place.
    */
   transpose(): Matrix2 {
@@ -165,6 +172,37 @@ export class Matrix2 {
     out.d = matrix.d
 
     return out
+  }
+
+  /**
+   * Serializes a matrix to an array.
+   */
+  static serialize(value: Matrix2): Matrix2Like {
+    return [value.a, value.b, value.c, value.d]
+  }
+
+  /**
+   * Deserializes a matrix from an array.
+   */
+  static deserialize(value: Matrix2Like, out = new Matrix2()): Matrix2 {
+    out.a = value[0]
+    out.b = value[1]
+    out.c = value[2]
+    out.d = value[3]
+
+    return out
+  }
+
+  /**
+   * Checks whether a value is a valid matrix serial.
+   */
+  static validateSerial(value: unknown): value is Matrix2Like {
+    return Array.isArray(value) &&
+      value.length === 4 &&
+      typeof value[0] === 'number' &&
+      typeof value[1] === 'number' &&
+      typeof value[2] === 'number' &&
+      typeof value[3] === 'number'
   }
 
   /**
@@ -361,3 +399,5 @@ export class Matrix2 {
    */
   static readonly Zero = Matrix2.zero()
 }
+
+export type Matrix2Like = [number, number, number, number]
