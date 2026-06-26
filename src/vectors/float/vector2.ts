@@ -33,6 +33,13 @@ export class Vector2 {
     return Vector2.copy(this)
   }
 
+  /**
+   * Serializes this vector.
+   */
+  serialize(): Vector2Like {
+    return Vector2.serialize(this)
+  }
+
   splat(scalar: number): this {
     Vector2.splat(scalar, this)
 
@@ -127,6 +134,43 @@ export class Vector2 {
     out.y = v.y
 
     return out
+  }
+
+  /**
+   * Serializes a vector to an object.
+   */
+  static serialize(value: Vector2): Vector2Like {
+    return {
+      x: value.x,
+      y: value.y
+    }
+  }
+
+  /**
+   * Deserializes a vector from an object.
+   */
+  static deserialize(value: Vector2Like, out = new Vector2()): Vector2 {
+    out.x = value.x
+    out.y = value.y
+
+    return out
+  }
+
+  /**
+   * Checks whether a value is a valid vector serial.
+   */
+  static validateSerial(value: unknown): value is Vector2Like {
+    if (!value || typeof value !== 'object') {
+      return false
+    }
+
+    if (!('x' in value) || !('y' in value)) {
+      return false
+    }
+
+    const serial = value as Vector2Like
+
+    return typeof serial.x === 'number' && typeof serial.y === 'number'
   }
 
   static splat(scalar: number, out = new Vector2()): Vector2 {
@@ -364,4 +408,9 @@ export class Vector2 {
    * /
    */
   static NegY = new Vector2(0, -1)
+}
+
+export type Vector2Like = {
+  x: number
+  y: number
 }

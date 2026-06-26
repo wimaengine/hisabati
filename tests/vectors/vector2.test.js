@@ -17,6 +17,22 @@ describe("Testing `Vector2`", () => {
         deepStrictEqual(vector, expected)
     })
 
+    test("`Vector2` serializes correctly", () => {
+        const vector = new Vector2(1, 5)
+        const serial = Vector2.serialize(vector)
+
+        deepStrictEqual(serial, { x: 1, y: 5 })
+        deepStrictEqual(vector.serialize(), serial)
+        strictEqual(Vector2.validateSerial(serial), true)
+    })
+
+    test("`Vector2` deserializes correctly", () => {
+        const serial = { x: 1, y: 5 }
+        const expected = new Vector2(1, 5)
+
+        deepStrictEqual(Vector2.deserialize(serial), expected)
+    })
+
     test("`Vector2.set` sets correctly", () => {
         const vector = Vector2.set(1, 2)
         const expected = new Vector2(1, 2)
