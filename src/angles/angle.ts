@@ -19,6 +19,13 @@ export class Angle {
   }
 
   /**
+   * Serializes this angle.
+   */
+  serialize(): AngleLike {
+    return Angle.serialize(this)
+  }
+
+  /**
    * Linearly interpolates between two angles.
    */
   static lerp(a: Angle, b: Angle, t: number, out: Angle): void {
@@ -33,4 +40,29 @@ export class Angle {
 
     return out
   }
+
+  /**
+   * Serializes an angle to a number.
+   */
+  static serialize(value: Angle): AngleLike {
+    return value.value
+  }
+
+  /**
+   * Deserializes an angle from a number.
+   */
+  static deserialize(value: AngleLike, out = new Angle()): Angle {
+    out.value = value
+
+    return out
+  }
+
+  /**
+   * Checks whether a value is a valid angle serial.
+   */
+  static validateSerial(value: unknown): value is AngleLike {
+    return typeof value === 'number'
+  }
 }
+
+export type AngleLike = number
