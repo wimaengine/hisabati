@@ -31,6 +31,13 @@ export class Vector4 {
     return Vector4.copy(this)
   }
 
+  /**
+   * Serializes this vector.
+   */
+  serialize(): Vector4Like {
+    return Vector4.serialize(this)
+  }
+
   splat(scalar: number): this {
     Vector4.splat(scalar, this)
 
@@ -126,6 +133,50 @@ export class Vector4 {
     out.w = v.w
 
     return out
+  }
+
+  /**
+   * Serializes a vector to an object.
+   */
+  static serialize(value: Vector4): Vector4Like {
+    return {
+      x: value.x,
+      y: value.y,
+      z: value.z,
+      w: value.w
+    }
+  }
+
+  /**
+   * Deserializes a vector from an object.
+   */
+  static deserialize(value: Vector4Like, out = new Vector4()): Vector4 {
+    out.x = value.x
+    out.y = value.y
+    out.z = value.z
+    out.w = value.w
+
+    return out
+  }
+
+  /**
+   * Checks whether a value is a valid vector serial.
+   */
+  static validateSerial(value: unknown): value is Vector4Like {
+    if (!value || typeof value !== 'object') {
+      return false
+    }
+
+    if (!('x' in value) || !('y' in value) || !('z' in value) || !('w' in value)) {
+      return false
+    }
+
+    const serial = value as Vector4Like
+
+    return typeof serial.x === 'number' &&
+      typeof serial.y === 'number' &&
+      typeof serial.z === 'number' &&
+      typeof serial.w === 'number'
   }
 
   static splat(scalar: number, out = new Vector4()): Vector4 {
@@ -387,4 +438,11 @@ export class Vector4 {
    * /
    */
   static NegW = new Vector4(0, 0, 0, -1)
+}
+
+export type Vector4Like = {
+  x: number
+  y: number
+  z: number
+  w: number
 }
