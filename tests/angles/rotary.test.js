@@ -24,6 +24,22 @@ describe("Testing `Rotary`", () => {
         deepStrictEqual(rotary, expected)
     })
 
+    test("`Rotary` serializes correctly", () => {
+        const rotary = new Rotary(1, 5)
+        const serial = Rotary.serialize(rotary)
+
+        deepStrictEqual(serial, { cos: 1, sin: 5 })
+        deepStrictEqual(rotary.serialize(), serial)
+        strictEqual(Rotary.validateSerial(serial), true)
+    })
+
+    test("`Rotary` deserializes correctly", () => {
+        const serial = { cos: 1, sin: 5 }
+        const expected = new Rotary(1, 5)
+
+        deepStrictEqual(Rotary.deserialize(serial), expected)
+    })
+
     test("`Rotary.set` sets correctly", () => {
         const rotary = Rotary.set(1, 2)
         const expected = new Rotary(1, 2)

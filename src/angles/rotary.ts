@@ -41,6 +41,13 @@ export class Rotary {
   }
 
   /**
+   * Serializes this rotary.
+   */
+  serialize(): RotaryLike {
+    return Rotary.serialize(this)
+  }
+
+  /**
    * Returns the squared magnitude of this rotary.
    */
   magnitudeSquared(): number {
@@ -121,6 +128,43 @@ export class Rotary {
     out.sin = rotary.sin
 
     return out
+  }
+
+  /**
+   * Serializes a rotary to an object.
+   */
+  static serialize(value: Rotary): RotaryLike {
+    return {
+      cos: value.cos,
+      sin: value.sin
+    }
+  }
+
+  /**
+   * Deserializes a rotary from an object.
+   */
+  static deserialize(value: RotaryLike, out = new Rotary()): Rotary {
+    out.cos = value.cos
+    out.sin = value.sin
+
+    return out
+  }
+
+  /**
+   * Checks whether a value is a valid rotary serial.
+   */
+  static validateSerial(value: unknown): value is RotaryLike {
+    if (!value || typeof value !== 'object') {
+      return false
+    }
+
+    if (!('cos' in value) || !('sin' in value)) {
+      return false
+    }
+
+    const serial = value as RotaryLike
+
+    return typeof serial.cos === 'number' && typeof serial.sin === 'number'
   }
 
   /**
@@ -329,4 +373,9 @@ export class Rotary {
    * The zero rotary.
    */
   static readonly Zero = Rotary.zero()
+}
+
+export type RotaryLike = {
+  cos: number
+  sin: number
 }
