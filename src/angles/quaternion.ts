@@ -45,6 +45,13 @@ export class Quaternion {
   }
 
   /**
+   * Serializes this quaternion.
+   */
+  serialize(): QuaternionLike {
+    return Quaternion.serialize(this)
+  }
+
+  /**
    * Negates the vector part of this quaternion.
    */
   reverse(): Quaternion {
@@ -136,6 +143,50 @@ export class Quaternion {
     to.w = from.w
 
     return to
+  }
+
+  /**
+   * Serializes a quaternion to an object.
+   */
+  static serialize(value: Quaternion): QuaternionLike {
+    return {
+      x: value.x,
+      y: value.y,
+      z: value.z,
+      w: value.w
+    }
+  }
+
+  /**
+   * Deserializes a quaternion from an object.
+   */
+  static deserialize(value: QuaternionLike, out = new Quaternion()): Quaternion {
+    out.x = value.x
+    out.y = value.y
+    out.z = value.z
+    out.w = value.w
+
+    return out
+  }
+
+  /**
+   * Checks whether a value is a valid quaternion serial.
+   */
+  static validateSerial(value: unknown): value is QuaternionLike {
+    if (!value || typeof value !== 'object') {
+      return false
+    }
+
+    if (!('x' in value) || !('y' in value) || !('z' in value) || !('w' in value)) {
+      return false
+    }
+
+    const serial = value as QuaternionLike
+
+    return typeof serial.x === 'number' &&
+      typeof serial.y === 'number' &&
+      typeof serial.z === 'number' &&
+      typeof serial.w === 'number'
   }
 
   /**
@@ -546,4 +597,11 @@ export class Quaternion {
    * The zero quaternion.
    */
   static readonly Zero = Quaternion.zero()
+}
+
+export type QuaternionLike = {
+  x: number
+  y: number
+  z: number
+  w: number
 }

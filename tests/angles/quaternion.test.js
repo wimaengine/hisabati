@@ -34,6 +34,22 @@ describe("Testing `Quaternion`", () => {
         deepStrictEqual(actual, expected)
     })
 
+    test("`Quaternion` serializes correctly", () => {
+        const quaternion = new Quaternion(1, 2, 3, 4)
+        const serial = Quaternion.serialize(quaternion)
+
+        deepStrictEqual(serial, { x: 1, y: 2, z: 3, w: 4 })
+        deepStrictEqual(quaternion.serialize(), serial)
+        strictEqual(Quaternion.validateSerial(serial), true)
+    })
+
+    test("`Quaternion` deserializes correctly", () => {
+        const serial = { x: 1, y: 2, z: 3, w: 4 }
+        const expected = new Quaternion(1, 2, 3, 4)
+
+        deepStrictEqual(Quaternion.deserialize(serial), expected)
+    })
+
     test('`Quaternion.identity` is identity', () => {
         const quaternion = Quaternion.identity()
         const expected = new Quaternion(0, 0, 0, 1)
