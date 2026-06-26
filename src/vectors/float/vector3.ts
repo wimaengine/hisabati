@@ -29,6 +29,13 @@ export class Vector3 {
     return Vector3.copy(this)
   }
 
+  /**
+   * Serializes this vector.
+   */
+  serialize(): Vector3Like {
+    return Vector3.serialize(this)
+  }
+
   splat(scalar: number): this {
     Vector3.splat(scalar, this)
 
@@ -125,6 +132,47 @@ export class Vector3 {
     out.z = v1.z
 
     return out
+  }
+
+  /**
+   * Serializes a vector to an object.
+   */
+  static serialize(value: Vector3): Vector3Like {
+    return {
+      x: value.x,
+      y: value.y,
+      z: value.z
+    }
+  }
+
+  /**
+   * Deserializes a vector from an object.
+   */
+  static deserialize(value: Vector3Like, out = new Vector3()): Vector3 {
+    out.x = value.x
+    out.y = value.y
+    out.z = value.z
+
+    return out
+  }
+
+  /**
+   * Checks whether a value is a valid vector serial.
+   */
+  static validateSerial(value: unknown): value is Vector3Like {
+    if (!value || typeof value !== 'object') {
+      return false
+    }
+
+    if (!('x' in value) || !('y' in value) || !('z' in value)) {
+      return false
+    }
+
+    const serial = value as Vector3Like
+
+    return typeof serial.x === 'number' &&
+      typeof serial.y === 'number' &&
+      typeof serial.z === 'number'
   }
 
   static splat(scalar: number, out = new Vector3()): Vector3 {
@@ -374,4 +422,10 @@ export class Vector3 {
    * /
    */
   static NegZ = new Vector3(0, 0, -1)
+}
+
+export type Vector3Like = {
+  x: number
+  y: number
+  z: number
 }
