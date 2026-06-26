@@ -45,6 +45,30 @@ describe("Testing `Affine3`", () => {
         deepStrictEqual(destination, source)
     })
 
+    test("`Affine3` serializes correctly", () => {
+        const source = new Affine3(
+            1, 2, 3, 4,
+            5, 6, 7, 8,
+            9, 10, 11, 12
+        )
+        const serial = Affine3.serialize(source)
+
+        deepStrictEqual(serial, [1, 5, 9, 2, 6, 10, 3, 7, 11, 4, 8, 12])
+        deepStrictEqual(source.serialize(), serial)
+        strictEqual(Affine3.validateSerial(serial), true)
+    })
+
+    test("`Affine3` deserializes correctly", () => {
+        const serial = [1, 5, 9, 2, 6, 10, 3, 7, 11, 4, 8, 12]
+        const expected = new Affine3(
+            1, 2, 3, 4,
+            5, 6, 7, 8,
+            9, 10, 11, 12
+        )
+
+        deepStrictEqual(Affine3.deserialize(serial), expected)
+    })
+
     test("`Affine3.set` sets values corrrectly", () => {
         const expected = new Affine3(
             1, 2, 3, 4,

@@ -94,6 +94,13 @@ export class Affine3 {
   }
 
   /**
+   * Serializes this affine.
+   */
+  serialize(): Affine3Like {
+    return Affine3.serialize(this)
+  }
+
+  /**
    * Composes this affine from translation, orientation and scale.
    */
   compose(translation: Vector3, orientation: Quaternion, scale: Vector3): this {
@@ -233,6 +240,66 @@ export class Affine3 {
     out.z = affine.z
 
     return out
+  }
+
+  /**
+   * Serializes an affine to an array.
+   */
+  static serialize(value: Affine3): Affine3Like {
+    return [
+      value.a,
+      value.b,
+      value.c,
+      value.d,
+      value.e,
+      value.f,
+      value.g,
+      value.h,
+      value.i,
+      value.x,
+      value.y,
+      value.z
+    ]
+  }
+
+  /**
+   * Deserializes an affine from an array.
+   */
+  static deserialize(value: Affine3Like, out = new Affine3()): Affine3 {
+    out.a = value[0]
+    out.b = value[1]
+    out.c = value[2]
+    out.d = value[3]
+    out.e = value[4]
+    out.f = value[5]
+    out.g = value[6]
+    out.h = value[7]
+    out.i = value[8]
+    out.x = value[9]
+    out.y = value[10]
+    out.z = value[11]
+
+    return out
+  }
+
+  /**
+   * Checks whether a value is a valid affine serial.
+   */
+  static validateSerial(value: unknown): value is Affine3Like {
+    return Array.isArray(value) &&
+      value.length === 12 &&
+      typeof value[0] === 'number' &&
+      typeof value[1] === 'number' &&
+      typeof value[2] === 'number' &&
+      typeof value[3] === 'number' &&
+      typeof value[4] === 'number' &&
+      typeof value[5] === 'number' &&
+      typeof value[6] === 'number' &&
+      typeof value[7] === 'number' &&
+      typeof value[8] === 'number' &&
+      typeof value[9] === 'number' &&
+      typeof value[10] === 'number' &&
+      typeof value[11] === 'number'
   }
 
   /**
@@ -732,3 +799,5 @@ export class Affine3 {
    */
   static readonly Zero = Affine3.zero()
 }
+
+export type Affine3Like = [number, number, number, number, number, number, number, number, number, number, number, number]
