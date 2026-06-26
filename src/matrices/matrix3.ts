@@ -91,6 +91,13 @@ export class Matrix3 {
   }
 
   /**
+   * Serializes this matrix.
+   */
+  serialize(): Matrix3Like {
+    return Matrix3.serialize(this)
+  }
+
+  /**
    * Transposes this matrix in place.
    */
   transpose(): Matrix3 {
@@ -224,6 +231,47 @@ export class Matrix3 {
     out.i = matrix.i
 
     return out
+  }
+
+  /**
+   * Serializes a matrix to an array.
+   */
+  static serialize(value: Matrix3): Matrix3Like {
+    return [value.a, value.b, value.c, value.d, value.e, value.f, value.g, value.h, value.i]
+  }
+
+  /**
+   * Deserializes a matrix from an array.
+   */
+  static deserialize(value: Matrix3Like, out = new Matrix3()): Matrix3 {
+    out.a = value[0]
+    out.b = value[1]
+    out.c = value[2]
+    out.d = value[3]
+    out.e = value[4]
+    out.f = value[5]
+    out.g = value[6]
+    out.h = value[7]
+    out.i = value[8]
+
+    return out
+  }
+
+  /**
+   * Checks whether a value is a valid matrix serial.
+   */
+  static validateSerial(value: unknown): value is Matrix3Like {
+    return Array.isArray(value) &&
+      value.length === 9 &&
+      typeof value[0] === 'number' &&
+      typeof value[1] === 'number' &&
+      typeof value[2] === 'number' &&
+      typeof value[3] === 'number' &&
+      typeof value[4] === 'number' &&
+      typeof value[5] === 'number' &&
+      typeof value[6] === 'number' &&
+      typeof value[7] === 'number' &&
+      typeof value[8] === 'number'
   }
 
   /**
@@ -526,3 +574,5 @@ export class Matrix3 {
    */
   static readonly Zero = Matrix3.zero()
 }
+
+export type Matrix3Like = [number, number, number, number, number, number, number, number, number]
