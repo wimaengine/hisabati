@@ -53,6 +53,13 @@ export class Affine2 {
   }
 
   /**
+   * Serializes this affine.
+   */
+  serialize(): Affine2Like {
+    return Affine2.serialize(this)
+  }
+
+  /**
    * Composes this affine from translation, orientation and scale.
    */
   compose(translation: Vector2, orientation: Rotary, scale: Vector2): this {
@@ -166,6 +173,41 @@ export class Affine2 {
     out.y = affine.y
 
     return out
+  }
+
+  /**
+   * Serializes an affine to an array.
+   */
+  static serialize(value: Affine2): Affine2Like {
+    return [value.a, value.b, value.c, value.d, value.x, value.y]
+  }
+
+  /**
+   * Deserializes an affine from an array.
+   */
+  static deserialize(value: Affine2Like, out = new Affine2()): Affine2 {
+    out.a = value[0]
+    out.b = value[1]
+    out.c = value[2]
+    out.d = value[3]
+    out.x = value[4]
+    out.y = value[5]
+
+    return out
+  }
+
+  /**
+   * Checks whether a value is a valid affine serial.
+   */
+  static validateSerial(value: unknown): value is Affine2Like {
+    return Array.isArray(value) &&
+      value.length === 6 &&
+      typeof value[0] === 'number' &&
+      typeof value[1] === 'number' &&
+      typeof value[2] === 'number' &&
+      typeof value[3] === 'number' &&
+      typeof value[4] === 'number' &&
+      typeof value[5] === 'number'
   }
 
   /**
@@ -403,3 +445,5 @@ export class Affine2 {
    */
   static readonly Zero = Affine2.zero()
 }
+
+export type Affine2Like = [number, number, number, number, number, number]
