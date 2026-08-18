@@ -310,8 +310,8 @@ export class Affine2 {
     out.b = -b * invDet
     out.c = -c * invDet
     out.d = a * invDet
-    out.x = (c * y - d * x) * det
-    out.y = -(a * y - b * x) * det
+    out.x = (c * y - d * x) * invDet
+    out.y = -(a * y - b * x) * invDet
 
     return out
   }
