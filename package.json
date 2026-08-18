@@ -1,6 +1,6 @@
 {
   "name": "hisabati",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Modular 2D and 3D math utilities for vectors, matrices, transforms, rotations, and math functions.",
   "type": "module",
   "main": "./dist/index.umd.js",
